@@ -1,6 +1,6 @@
 {
-  "name": "feature-toggle-client-ts-node",
-  "version": "0.0.1",
+  "name": "feature-toggle-node",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/api.js",
   "files": [
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.wdf.sap.corp:devx-wing/feature-toggle-client-ts-node.git"
+    "url": "git@github.com/sap-staging/feature-toggle-node.git"
   },
   "author": "",
   "license": "ISC",
@@ -59,8 +59,8 @@
     ],
     "exclude": [
       "src/example/example.ts",
-      "src/example/example_simple.ts",      
-      "src/unleash_client_wrapper.ts"      
+      "src/example/example_simple.ts",
+      "src/unleash_client_wrapper.ts"
     ],
     "reporter": [
       "text",
