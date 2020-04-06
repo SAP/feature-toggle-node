@@ -1,11 +1,11 @@
 # feature-toggle-node
-Node module for enabling or disabling node based SAP Business Application Studio features
+A Node.js module for enabling or disabling Node.js-based SAP Business Application Studio features.
 
 
 ## Description
-This project is used to inquire if a SAP Business Application Studio feature toggle is enabled or disabled.
+This module is used to inquire if an SAP Business Application Studio feature toggle is enabled or disabled.
 
-If an extension is written in NodeJS ot TypeScript and you would like to control the extension features via feature toggle, this library is the integrated way to use feature toggles in SAP Business Application Studio.
+This module should be used if your SAP Business Application Studio extension is written in Node.js or TypeScript and you want to control the extension features via feature toggle.
 
 
 ## Requirements
@@ -16,24 +16,26 @@ If an extension is written in NodeJS ot TypeScript and you would like to control
 
 ## Download and Installation
 
-Install the feature-toggle-node as a dependency 
+Install the feature-toggle-node as a dependency. 
 
 1. Import the extension into your SAP Business Application Studio. 
 
 2. Open the command prompt at the root of your extension.
 
-3. Add the feature-toggle-node to the dependency section of your package.json. In the command prompt type:
+3. Add the feature-toggle-node to the dependency section of your 'package.json' file by entering the following in the command prompt:
+
 	```
 	$ npm install feature-toggle-node --save
 	```
 
 
 ### Configuration
-Running The feature-toggle-node **locally** requires providing the following environment variables:
+To run the feature-toggle-node **locally**, you need to provide the following environment variables:
 - `FT_SERVER_ENDPOINT` - Feature toggle server endpoint (mandatory)
 - `WS_BASE_URL` - URL to the SAP Business Application Studio Cloud Foundry (mandatory)
-- `USER_NAME` - User name of the SAP Business Application Studio logged in user (mandatory)- `FT_CLIENT_REFRESH_INTERVAL` - Feature toggle client refresh interval (optional, default value: 10s)
-- `SHOW_LOG` - If true, display console logs (optional)
+- `USER_NAME` - Name of the user logged into SAP Business Application Studio (mandatory)
+- `FT_CLIENT_REFRESH_INTERVAL` - Feature toggle client refresh interval (optional, default value: 10s)
+- `SHOW_LOG` - If true, displays console logs (optional)
 
 Environment variables example:
 
@@ -46,7 +48,7 @@ Environment variables example:
 ```
 
 ## Usage
-Use the feature-toggle-node as following:
+Use the feature-toggle-node as follows:
 
 ```
 import { isFeatureEnabled } from "feature-toggle-node";
@@ -61,7 +63,7 @@ import { isFeatureEnabled } from "feature-toggle-node";
 ```
 
 ## How to obtain support
-Please create an issue within this GitHub repository.
+Open an issue within this GitHub repository.
 
 
 ## License
