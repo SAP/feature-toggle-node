@@ -1,4 +1,4 @@
-# feature-toggle-node
+# feature-toggle-node [![CircleCI](https://circleci.com/gh/SAP/feature-toggle-node.svg?style=svg)](https://circleci.com/gh/SAP/feature-toggle-node)
 A Node.js module for enabling or disabling Node.js-based SAP Business Application Studio features.
 
 
