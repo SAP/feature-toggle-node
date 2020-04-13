@@ -1,6 +1,16 @@
 version: 2
 jobs:
-  build-and-test:
+  node10:
+    docker:
+      - image: circleci/node:10.19
+    working_directory: ~/repo    
+    steps:
+      - checkout      
+      - run: npm install            
+      - run: npm ci
+      - run: echo node 10 job finished successfully
+
+  node13:
     docker:
       - image: circleci/node:13
     working_directory: ~/repo    
@@ -8,8 +18,11 @@ jobs:
       - checkout      
       - run: npm install            
       - run: npm ci
+      - run: echo node 10 job finished successfully
+
 workflows:
   version: 2
   build:
     jobs:
-      - build-and-test
+      - node10
+      - node13
