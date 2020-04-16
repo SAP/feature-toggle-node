@@ -1,12 +1,15 @@
 {
   "name": "feature-toggle-node",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "lib/api.js",
   "files": [
     "lib",
     "src"
   ],
+  "engines" : { 
+    "node" : ">=10.19" 
+  },
   "scripts": {
     "ci": "npm-run-all compile lint coverage",
     "ci_t": "npm-run-all compile lint",
