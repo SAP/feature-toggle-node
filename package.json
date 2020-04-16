@@ -1,14 +1,14 @@
 {
   "name": "feature-toggle-node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "lib/api.js",
   "files": [
     "lib",
     "src"
   ],
-  "engines" : { 
-    "node" : ">=10.19" 
+  "engines": {
+    "node": ">=10.19"
   },
   "scripts": {
     "ci": "npm-run-all compile lint coverage",
@@ -19,7 +19,7 @@
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
-    "preversion": "npm run ci",    
+    "preversion": "npm run ci",
     "postversion": "git push && git push --tags && npm run clean"
   },
   "repository": {
