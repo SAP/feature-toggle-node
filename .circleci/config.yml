@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   node10:
     docker:
@@ -18,7 +19,23 @@ jobs:
       - checkout      
       - run: npm install            
       - run: npm ci
-      - run: echo node 10 job finished successfully
+      - run: echo node 13 job finished successfully
+
+  deploy-npm:
+    docker:
+      - image: circleci/node:10.19
+    working_directory: ~/repo    
+    steps:
+      - checkout      
+      - run: npm install            
+      - run: npm ci
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
+      - run: echo Deploy to NPM finished successfully
 
 workflows:
   version: 2
@@ -26,3 +43,11 @@ workflows:
     jobs:
       - node10
       - node13
+  deploy:
+    jobs:
+      - deploy-npm:
+          filters:
+            tags:
+              only: /^RELEASE/
+            branches:
+              ignore: /.*/
