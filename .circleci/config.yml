@@ -48,6 +48,6 @@ workflows:
       - deploy-npm:
           filters:
             tags:
-              only: /^RELEASE/
+              only: /^v.*/
             branches:
               ignore: /.*/
