@@ -18,7 +18,9 @@
     "lint": "eslint . --ext .ts",
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
-    "watch": "tsc -p . --watch"
+    "watch": "tsc -p . --watch",
+    "preversion": "npm run ci",    
+    "postversion": "git push && git push --tags && npm run clean"
   },
   "repository": {
     "type": "git",
