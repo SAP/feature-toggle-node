@@ -1,6 +1,6 @@
 {
   "name": "feature-toggle-node",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/api.js",
   "files": [
@@ -19,7 +19,7 @@
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
-    "preversion": "npm run ci",    
+    "preversion": "npm run ci",
     "postversion": "git push --tags && npm run clean"
   },
   "repository": {
