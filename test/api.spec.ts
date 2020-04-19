@@ -70,4 +70,8 @@ describe("isFeatureEnabled - positive flows", () => {
     expect(clientSpy.callCount).to.equal(1);
     expect(clientSpy.withArgs(`${extensionName}.${featureToggleName}`, {}).called).to.be.true;
   });
+
+  it("Test - true == false ????", async () => {
+    expect(false).to.be.true;
+  });
 });
