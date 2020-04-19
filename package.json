@@ -12,7 +12,7 @@
     "node": ">=10.19"
   },
   "scripts": {
-    "ci": "npm-run-all compile lint coverage",
+    "ci_a": "npm-run-all compile lint coverage",
     "ci_t": "npm-run-all compile lint",
     "compile": "npm run clean && tsc -p .",
     "test": "mocha",
@@ -20,7 +20,7 @@
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
-    "preversion": "npm-run-all ci",
+    "preversion": "npm-run-all ci_a",
     "postversion": "git push --tags"
   },
   "repository": {
