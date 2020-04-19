@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout      
       - run: npm install            
-      - run: npm ci
+      - run: npm run ci
       - run: ls -la
       - run: echo node 10 job finished successfully
 
@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout      
       - run: npm install            
-      - run: npm ci
+      - run: npm run ci
       - run: ls -la
       - run: echo node 13 job finished successfully
 
@@ -30,7 +30,7 @@ jobs:
     steps:
       - checkout      
       - run: npm install            
-      - run: npm ci
+      - run: npm run ci
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc

@@ -67,4 +67,4 @@ typings/
 .npmrc
 
 # Compiled source code
-#lib
+lib
