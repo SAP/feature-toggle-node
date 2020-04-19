@@ -1,6 +1,6 @@
 {
   "name": "@sap-devx/feature-toggle-node",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "main": "lib/api.js",
   "types": "lib/api.js",
@@ -21,7 +21,7 @@
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
     "preversion": "npm run ci",
-    "postversion": "git push --tags && npm run clean"
+    "postversion": "git push --tags"
   },
   "repository": {
     "type": "git",
