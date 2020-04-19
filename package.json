@@ -1,5 +1,5 @@
 {
-  "name": "feature-toggle-node",
+  "name": "@sap-devx/feature-toggle-node",
   "version": "0.0.5",
   "description": "",
   "main": "lib/api.js",
