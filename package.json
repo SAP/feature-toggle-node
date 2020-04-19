@@ -20,7 +20,7 @@
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
-    "preversion": "npm run ci",
+    "preversion": "npm-run-all ci",
     "postversion": "git push --tags"
   },
   "repository": {
