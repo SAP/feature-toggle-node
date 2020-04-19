@@ -25,7 +25,7 @@ Install the feature-toggle-node as a dependency.
 3. Add the feature-toggle-node to the dependency section of your 'package.json' file by entering the following in the command prompt:
 
 	```
-	$ npm install feature-toggle-node --save
+	$ npm install @sap-devx/feature-toggle-node --save
 	```
 
 
@@ -51,7 +51,7 @@ Environment variables example:
 Use the feature-toggle-node as follows:
 
 ```
-import { isFeatureEnabled } from "feature-toggle-node";
+import { isFeatureEnabled } from "@sap-devx/feature-toggle-node";
 
 (async () => {  
   if (await isFeatureEnabled("EXTENSION_NAME", "FEATURE_TOGGLE_NAME")) {

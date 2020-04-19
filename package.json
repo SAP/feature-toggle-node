@@ -1,8 +1,9 @@
 {
   "name": "@sap-devx/feature-toggle-node",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "",
   "main": "lib/api.js",
+  "types": "lib/api.js",
   "files": [
     "lib",
     "src"
@@ -20,11 +21,11 @@
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
     "preversion": "npm run ci",
-    "postversion": "git push --tags && npm run clean"
+    "postversion": "git push --tags"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/sap-staging/feature-toggle-node.git"
+    "url": "git@github.com/SAP/feature-toggle-node.git"    
   },
   "author": "",
   "license": "ISC",
