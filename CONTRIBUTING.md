@@ -88,3 +88,5 @@ Make sure the remote master branch contains the code for the new release and fol
 7. Create a pull request on GitHub
 
 8. On GitHub, make sure all pipelines including the `deploy` pipeline pass and merge to the master
+
+9. Update the [CHANGELOG.md](https://github.com/SAP/feature-toggle-node/blob/master/CHANGELOG.md) file
