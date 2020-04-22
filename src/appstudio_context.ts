@@ -47,7 +47,7 @@ export function createContextObject(): AppStudioMultiContext {
     currentRegion: "",
     currentCfSubAccount: "",
     currentUser: userName,
-    currentWs: ""
+    currentWs: "",
   };
 
   // get the WS and region from the env

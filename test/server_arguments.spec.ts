@@ -12,7 +12,7 @@ describe("Server arguments tests", () => {
   it("Test getServerArgs - positive flow", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl",
-      FT_CLIENT_REFRESH_INTERVAL: "60s"
+      FT_CLIENT_REFRESH_INTERVAL: "60s",
     });
     const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
@@ -23,7 +23,7 @@ describe("Server arguments tests", () => {
   it("Test getServerArgs - positive flow - endpoint with trailing slash", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl/",
-      FT_CLIENT_REFRESH_INTERVAL: "2s"
+      FT_CLIENT_REFRESH_INTERVAL: "2s",
     });
     const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
@@ -34,7 +34,7 @@ describe("Server arguments tests", () => {
   it("Test getServerArgs - positive flow - endpoint with trailing space", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl/ ",
-      FT_CLIENT_REFRESH_INTERVAL: "2s"
+      FT_CLIENT_REFRESH_INTERVAL: "2s",
     });
     const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
@@ -44,7 +44,7 @@ describe("Server arguments tests", () => {
 
   it("Test getServerArgs - positive flow - interval not defined", () => {
     sinon.stub(process, "env").value({
-      FT_SERVER_ENDPOINT: "testurl"
+      FT_SERVER_ENDPOINT: "testurl",
     });
     const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
@@ -55,7 +55,7 @@ describe("Server arguments tests", () => {
   it("Test getServerArgs - positive flow - interval is empty string", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl ",
-      FT_CLIENT_REFRESH_INTERVAL: ""
+      FT_CLIENT_REFRESH_INTERVAL: "",
     });
     const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
@@ -66,7 +66,7 @@ describe("Server arguments tests", () => {
   it("Test getServerArgs - negative flow - endpoint not defined", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "",
-      FT_CLIENT_REFRESH_INTERVAL: ""
+      FT_CLIENT_REFRESH_INTERVAL: "",
     });
 
     expect(() => {
