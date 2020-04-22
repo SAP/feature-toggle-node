@@ -18,7 +18,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: null,
       users: "",
-      wss: ""
+      wss: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, null);
@@ -33,7 +33,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "dev",
@@ -41,7 +41,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -56,7 +56,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "dev",
@@ -64,7 +64,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -79,7 +79,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -87,7 +87,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -102,7 +102,7 @@ describe("Strategy unit tests", () => {
       regions: "us20,eu20,jp10",
       subaccounts: "",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -110,7 +110,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "eu20",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -125,7 +125,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "sub1,sub2,sub3",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -133,7 +133,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "sub3",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -148,7 +148,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "koko@koko.com, koko4@koko.com",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -156,7 +156,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "sub3",
       currentUser: "koko@koko.com",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -171,7 +171,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "",
-      wss: "ws-wer,ws-popo,ws-koko"
+      wss: "ws-wer,ws-popo,ws-koko",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -179,7 +179,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "sub3",
       currentUser: "",
-      currentWs: "ws-wer"
+      currentWs: "ws-wer",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -194,7 +194,7 @@ describe("Strategy unit tests", () => {
       regions: "",
       subaccounts: "",
       users: "",
-      wss: ""
+      wss: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "dev",
@@ -202,7 +202,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -217,7 +217,7 @@ describe("Strategy unit tests", () => {
       regions: "region1",
       subaccounts: "subaccount1",
       users: "user1",
-      wss: "wss1"
+      wss: "wss1",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentApp: "",
@@ -225,7 +225,7 @@ describe("Strategy unit tests", () => {
       currentRegion: "",
       currentCfSubAccount: "",
       currentUser: "",
-      currentWs: ""
+      currentWs: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);

@@ -22,7 +22,7 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     appName: extensionName,
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
-    strategies: featureStrategies
+    strategies: featureStrategies,
   });
 
   await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs);

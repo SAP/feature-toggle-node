@@ -19,7 +19,7 @@ describe("Test unleash client manager", () => {
     // stub env params
     const serverArgsMock: serverArgs.ServerArgs = {
       ftServerEndPoint: "",
-      ftServerInterval: 0
+      ftServerInterval: 0,
     };
     sinon.stub(serverArgs, "getServerArgs").returns(serverArgsMock);
 
@@ -27,12 +27,12 @@ describe("Test unleash client manager", () => {
     const unleashConfigA: UnleashConfig = {
       appName: extensionNameA,
       refreshInterval: serverArgsMock.ftServerInterval,
-      url: serverArgsMock.ftServerEndPoint
+      url: serverArgsMock.ftServerEndPoint,
     };
     const unleashConfigB: UnleashConfig = {
       appName: extensionNameB,
       refreshInterval: serverArgsMock.ftServerInterval,
-      url: serverArgsMock.ftServerEndPoint
+      url: serverArgsMock.ftServerEndPoint,
     };
     // create stub for the initialize of Unleash interface
     const initializeStub = sinon.stub(unleashClientWrapper, "initializeUnleashClient");

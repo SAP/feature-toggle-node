@@ -18,7 +18,7 @@ describe("Test context manager", () => {
   beforeEach(() => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
-      USER_NAME: USER
+      USER_NAME: USER,
     });
 
     contextMap = new Map<string, AppStudioMultiContext>();
@@ -71,7 +71,7 @@ describe("Test context manager", () => {
   it("Test context - getContext - getting the expected context values - positive flow", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://consumer-trial-workspaces-ws-9gzgq.eu10.trial.applicationstudio.cloud.sap/",
-      USER_NAME: USER
+      USER_NAME: USER,
     });
 
     // create context - NOT in cache -> create a new one
@@ -83,7 +83,7 @@ describe("Test context manager", () => {
   it("Test context - getContext - getting error for lack of '-workspaces-ws-' in WS_BASE_URL - negative flow", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://azureconseun8vmz.eu20",
-      USER_NAME: USER
+      USER_NAME: USER,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -92,7 +92,7 @@ describe("Test context manager", () => {
   it("Test context - getContext - getting error for when using http instead of https in WS_BASE_URL - negative flow", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "http://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
-      USER_NAME: USER
+      USER_NAME: USER,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -100,7 +100,7 @@ describe("Test context manager", () => {
 
   it("Test context - getContext - getting error for no WS_BASE_URL env parameter - negative flow", () => {
     sinon.stub(process, "env").value({
-      USER_NAME: USER
+      USER_NAME: USER,
     });
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env WS_BASE_URL was NOT found in the environment variables");
@@ -108,7 +108,7 @@ describe("Test context manager", () => {
 
   it("Test context - getContext - getting error for no USER_NAME env parameter - negative flow", () => {
     sinon.stub(process, "env").value({
-      WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/"
+      WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
     });
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env USER_NAME was NOT found in the environment variables");
