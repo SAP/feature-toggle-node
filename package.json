@@ -79,7 +79,7 @@
     "statements": 90
   },
   "dependencies": {
-    "parse-duration": "^0.1.2",
+    "parse-duration": "^0.3.0",
     "unleash-client": "^3.3.3"
   }
 }
