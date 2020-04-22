@@ -48,9 +48,13 @@ workflows:
       - node13
   deploy:
     jobs:
+      - hold: # <<< A job that will require manual approval in the CircleCI web application.
+          type: approval
       - deploy-npm:
-          filters:
+          filters: # <<< Deploy only Tags
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
+          requires: # <<< Deploy only after manual approval
+            - hold
