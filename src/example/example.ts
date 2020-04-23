@@ -4,7 +4,7 @@ const EXTENSION_NAME = "auto_code";
 const FEATURE_TOGGLE_NAME = "ts_feature";
 
 function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 (async (): Promise<void> => {

@@ -21,7 +21,6 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
   const authorizationHeader: CustomHeaders = {};
   authorizationHeader["authorization"] = "client_key";
 
-  //let unleashClient: Unleash | undefined;
   //create a new unleash client
   const unleashClient = initialize({
     appName: extensionName,
