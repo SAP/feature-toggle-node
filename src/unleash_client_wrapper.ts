@@ -32,7 +32,7 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
   });
 
   await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs).catch(e => {
-    log(e);
+    throw e;
   });
   return unleashClient;
 }
