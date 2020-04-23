@@ -1,7 +1,6 @@
 import { initialize, Unleash, Strategy } from "unleash-client";
 import { log } from "./logger";
 import { ServerArgs } from "./server_arguments";
-import { CustomHeaders } from "unleash-client/lib/unleash";
 
 async function getUnleashClientReadyPromise(extensionName: string, client: Unleash, serverArgs: ServerArgs): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -18,16 +17,13 @@ async function getUnleashClientReadyPromise(extensionName: string, client: Unlea
 }
 
 export async function initializeUnleashClient(extensionName: string, serverArgs: ServerArgs, featureStrategies: Strategy[]): Promise<Unleash> {
-  const authorizationHeader: CustomHeaders = {};
-  authorizationHeader["authorization"] = "client_key";
-
   //create a new unleash client
   const unleashClient = initialize({
     appName: extensionName,
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: featureStrategies,
-    customHeaders: authorizationHeader
+    customHeaders: { authorization: "client_key" } //TODO: "client_key" should be entered externally
   });
 
   await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs);
