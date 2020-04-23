@@ -19,7 +19,7 @@ async function getUnleashClientReadyPromise(extensionName: string, client: Unlea
 
 export async function initializeUnleashClient(extensionName: string, serverArgs: ServerArgs, featureStrategies: Strategy[]): Promise<Unleash> {
   const authorizationHeader: CustomHeaders = {};
-  authorizationHeader["authorization"] = "client_key1";
+  authorizationHeader["authorization"] = "client_key";
 
   //let unleashClient: Unleash | undefined;
   //create a new unleash client
@@ -31,8 +31,6 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     customHeaders: authorizationHeader
   });
 
-  await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs).catch(e => {
-    throw e;
-  });
+  await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs);
   return unleashClient;
 }
