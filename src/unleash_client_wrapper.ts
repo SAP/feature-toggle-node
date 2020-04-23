@@ -23,7 +23,7 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: featureStrategies,
-    customHeaders: { authorization: "client_key" } //TODO: "client_key" should be entered externally
+    customHeaders: { authorization: "client_key" }, //TODO: "client_key" should be entered externally
   });
 
   await getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs);
