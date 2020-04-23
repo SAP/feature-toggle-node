@@ -87,6 +87,8 @@ Make sure the remote master branch contains the code for the new release and fol
 
 7. Create a pull request on GitHub
 
-8. On GitHub, make sure all pipelines including the `deploy` pipeline pass and merge to the master
+8. Wait until all the jobs except `deploy to npm` pass, then manual approve the `deploy to npm` job in the CircleCI web application in order to publish a new npm release.
 
-9. Update the [CHANGELOG.md](https://github.com/SAP/feature-toggle-node/blob/master/CHANGELOG.md) file
+9. On GitHub, make sure all jobs including the `deploy to npm`  pass and merge to master
+
+10. Update the [CHANGELOG.md](https://github.com/SAP/feature-toggle-node/blob/master/CHANGELOG.md) file

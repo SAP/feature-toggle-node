@@ -47,10 +47,11 @@ workflows:
       - node10
       - node13
   deploy:
-    jobs:
+    jobs:     
       - deploy-npm:
-          filters:
+          type: approval # <<< Deploy only after manual approval in the CircleCI web application.
+          filters: # <<< Deploy only Tags
             tags:
               only: /^v.*/
             branches:
-              ignore: /.*/
+              ignore: /.*/          

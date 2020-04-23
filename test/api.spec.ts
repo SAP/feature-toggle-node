@@ -56,9 +56,9 @@ describe("isFeatureEnabled - positive flows", () => {
     const extensionName = "ext";
     const featureToggleName = "ftName";
     const myClient = {
-      isEnabled: function(): boolean {
+      isEnabled: function (): boolean {
         return true;
-      } as unknown
+      } as unknown,
     } as Unleash;
     const context = {} as AppStudioMultiContext;
 
