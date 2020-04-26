@@ -8,7 +8,7 @@ import { AppStudioMultiStrategy } from "./appstudio_strategy";
 // map value = Unleash client
 const unleashClientMap = new Map<string, Unleash>();
 
-async function createNewUnleashClient(extensionName: string): Promise<Unleash> {
+async function createNewUnleashClient(extensionName: string, unleashClientMap: Map<string, Unleash>): Promise<Unleash> {
   //get server env arguments
   const serverArgs = ServerArgs.getServerArgs();
 
@@ -21,7 +21,7 @@ async function createNewUnleashClient(extensionName: string): Promise<Unleash> {
   return client;
 }
 
-export async function getUnleashClient(extensionName: string): Promise<Unleash> {
+export async function getUnleashClientFromMap(extensionName: string, unleashClientMap: Map<string, Unleash>): Promise<Unleash> {
   // If the client exist in the map return it
   const unleashClient = unleashClientMap.get(extensionName);
   if (unleashClient) {
@@ -29,5 +29,9 @@ export async function getUnleashClient(extensionName: string): Promise<Unleash> 
   }
 
   // The client does NOT exist in the map -> create a new client
-  return createNewUnleashClient(extensionName);
+  return createNewUnleashClient(extensionName, unleashClientMap);
+}
+
+export async function getUnleashClient(extensionName: string): Promise<Unleash> {
+  return getUnleashClientFromMap(extensionName, unleashClientMap);
 }

@@ -16,7 +16,7 @@
     "ci_t": "npm-run-all compile lint",
     "compile": "npm run clean && tsc -p .",
     "test": "mocha",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --max-warnings 0 --ext .ts",
     "coverage": "nyc mocha",
     "clean": "rimraf ./lib",
     "watch": "tsc -p . --watch",
@@ -79,6 +79,7 @@
     "statements": 100
   },
   "dependencies": {
+    "await-to-js": "^2.1.1",
     "parse-duration": "^0.3.0",
     "unleash-client": "^3.3.3"
   }

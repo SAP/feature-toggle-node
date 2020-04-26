@@ -5,8 +5,7 @@ import { AppStudioMultiContext, createContextObject } from "./appstudio_context"
 // map value = appStudioContext
 const contextMap = new Map<string, AppStudioMultiContext>();
 
-function createNewContext(extensionName: string): AppStudioMultiContext {
-  // TODO: collect the data
+function createNewContext(extensionName: string, contextMap: Map<string, AppStudioMultiContext>): AppStudioMultiContext {
   const context: AppStudioMultiContext = createContextObject();
 
   //add the context to the map
@@ -23,7 +22,7 @@ export function getContextFromMap(extensionName: string, contextMap: Map<string,
   }
 
   // The context does NOT exist in the map -> create a new context
-  return createNewContext(extensionName);
+  return createNewContext(extensionName, contextMap);
 }
 
 export function getContext(extensionName: string): AppStudioMultiContext {

@@ -7,43 +7,36 @@ import * as clientManager from "../src/unleash_client_manager";
 import * as contextManager from "../src/context_manager";
 import * as serverArgs from "../src/server_arguments";
 import { AppStudioMultiContext } from "../src/appstudio_context";
+import * as logger from "../src/logger";
 
 describe("isFeatureEnabled - negative flows", () => {
   afterEach(() => {
     sinon.restore();
   });
 
-  it("Test - isFeatureEnabled - extension name is empty", async () => {
-    sinon.stub(serverArgs, "getServerArgs").returns({ ftServerEndPoint: "test", ftServerInterval: 60000 });
-    try {
-      await API.isFeatureEnabled("", "aaa");
-    } catch (err) {
-      expect(err).to.be.an("error");
-      expect(err.message).to.not.be.empty;
-      expect(err.message).to.equal(`Feature toggle extension name can not be empty, null or undefined`);
-    }
+  const testFailure = async (extensionName, featureToggleName, errMessage: string): Promise<void> => {
+    const loggerSpy = sinon.stub(logger, "log");
+    const isFeatureEnabled = await API.isFeatureEnabled(extensionName, featureToggleName);
+
+    expect(isFeatureEnabled).to.be.false; // on error return false
+    expect(loggerSpy.callCount).to.equal(1);
+    expect(loggerSpy.args[0][0]).to.equal(errMessage); // exception error
+  };
+
+  it("Test - isFeatureEnabled - extension name is empty - isFeatureEnabled returns false", async () => {
+    const errMessage = `[ERROR] Failed to determine if feature toggle .aaa is enabled. Returning feature DISABLED. Error message: Error: Feature toggle extension name can not be empty, null or undefined`;
+    await testFailure("", "aaa", errMessage);
   });
 
-  it("Test - isFeatureEnabled - featureToggleName is empty", async () => {
-    sinon.stub(serverArgs, "getServerArgs").returns({ ftServerEndPoint: "test", ftServerInterval: 60000 });
-    try {
-      await API.isFeatureEnabled("bla", "");
-    } catch (err) {
-      expect(err).to.be.an("error");
-      expect(err.message).to.not.be.empty;
-      expect(err.message).to.equal(`Feature toggle name can not be empty, null or undefined`);
-    }
+  it("Test - isFeatureEnabled - featureToggleName is empty - isFeatureEnabled returns false", async () => {
+    const errMessage = `[ERROR] Failed to determine if feature toggle bla. is enabled. Returning feature DISABLED. Error message: Error: Feature toggle name can not be empty, null or undefined`;
+    await testFailure("bla", "", errMessage);
   });
 
-  it("Test - isFeatureEnabled - endpoint is empty", async () => {
+  it("Test - isFeatureEnabled - endpoint is empty - isFeatureEnabled returns false", async () => {
     sinon.stub(serverArgs, "getServerArgs").returns({ ftServerEndPoint: "", ftServerInterval: 60000 });
-    try {
-      await API.isFeatureEnabled("someName", "aaa");
-    } catch (err) {
-      expect(err).to.be.an("error");
-      expect(err.message).to.not.be.empty;
-      expect(err.message).to.contain("Unleash server URL missing");
-    }
+    const errMessage = `[ERROR] Failed to determine if feature toggle someName.aaa is enabled. Returning feature DISABLED. Error message: Error: Unleash server URL missing`;
+    await testFailure("someName", "aaa", errMessage);
   });
 });
 
