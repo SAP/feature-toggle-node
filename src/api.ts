@@ -2,6 +2,7 @@ import { Context } from "unleash-client/lib/context";
 import * as clientManager from "./unleash_client_manager";
 import * as contextManager from "./context_manager";
 import { log } from "./logger";
+import { Unleash } from "unleash-client";
 
 export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
   const ftName = `${extensionName}.${featureToggleName}`;
@@ -15,7 +16,7 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
     }
 
     //get unleash client
-    const client = await clientManager.getUnleashClient(extensionName);
+    const client: Unleash = await clientManager.getUnleashClient(extensionName);
 
     // get the context
     const context: Context = contextManager.getContext(extensionName);
