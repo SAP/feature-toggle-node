@@ -42,7 +42,18 @@ describe("Server arguments tests", () => {
     expect(testServerArgs.ftServerInterval).to.eql(2000);
   });
 
-  it("Test getServerArgs - positive flow - interval not defined", () => {
+  it("Test getServerArgs - negative flow - endpoint not defined", () => {
+    sinon.stub(process, "env").value({
+      FT_SERVER_ENDPOINT: "",
+      FT_CLIENT_REFRESH_INTERVAL: "",
+    });
+
+    expect(() => {
+      ServerUtil.getServerArgs();
+    }).to.throw("Feature toggle server endpoint (FT_SERVER_ENDPOINT) was NOT found in the environment variables");
+  });
+
+  it("Test getServerArgs - positive flow - interval not defined -> use default value", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl",
     });
@@ -52,7 +63,7 @@ describe("Server arguments tests", () => {
     expect(testServerArgs.ftServerInterval).to.eql(10000);
   });
 
-  it("Test getServerArgs - positive flow - interval is empty string", () => {
+  it("Test getServerArgs - positive flow - interval is empty string -> use default value", () => {
     sinon.stub(process, "env").value({
       FT_SERVER_ENDPOINT: "testurl ",
       FT_CLIENT_REFRESH_INTERVAL: "",
@@ -63,14 +74,14 @@ describe("Server arguments tests", () => {
     expect(testServerArgs.ftServerInterval).to.eql(10000);
   });
 
-  it("Test getServerArgs - negative flow - endpoint not defined", () => {
+  it("Test getServerArgs - positive flow - interval in the wrong format -> use default value", () => {
     sinon.stub(process, "env").value({
-      FT_SERVER_ENDPOINT: "",
-      FT_CLIENT_REFRESH_INTERVAL: "",
+      FT_SERVER_ENDPOINT: "testurl ",
+      FT_CLIENT_REFRESH_INTERVAL: "8",
     });
+    const testServerArgs: ServerUtil.ServerArgs = ServerUtil.getServerArgs();
 
-    expect(() => {
-      ServerUtil.getServerArgs();
-    }).to.throw("Feature toggle server endpoint (FT_SERVER_ENDPOINT) was NOT found in the environment variables");
+    expect(testServerArgs.ftServerEndPoint).to.eql("testurl/api/");
+    expect(testServerArgs.ftServerInterval).to.eql(10000);
   });
 });

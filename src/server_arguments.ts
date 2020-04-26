@@ -1,7 +1,7 @@
 import { log } from "./logger";
 import { getEnv } from "./utils";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const parse = require("parse-duration");
+const parseDuration = require("parse-duration");
 
 export const ENV_FT_SERVER_ENDPOINT_NAME = "FT_SERVER_ENDPOINT";
 export const ENV_REFRESH_INTERVAL_NAME = "FT_CLIENT_REFRESH_INTERVAL";
@@ -21,11 +21,14 @@ export function getServerArgs(): ServerArgs {
 
   //get refresh interval
   let interval = process.env[ENV_REFRESH_INTERVAL_NAME];
+  // do not parse undefined, empty...
+  if (interval) {
+    interval = parseDuration(interval);
+  }
+  // parse parseDuration result
   if (!interval) {
-    interval = parse(DEFAULT_REFRESH_INTERVAL);
-    log(`client refresh interval not set, using the default interval: ${DEFAULT_REFRESH_INTERVAL}`);
-  } else {
-    interval = parse(interval);
+    interval = parseDuration(DEFAULT_REFRESH_INTERVAL);
+    log(`[INFO] client refresh interval not set or in incorrect pattern, using the default interval: ${DEFAULT_REFRESH_INTERVAL}`);
   }
   log(`client refresh interval is: ${interval}`);
   return { ftServerEndPoint: endpoint, ftServerInterval: Number(interval) };

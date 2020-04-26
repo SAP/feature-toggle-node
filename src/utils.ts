@@ -4,7 +4,7 @@ export function getEnv(envName: string, errorMessage: string): string {
   //get feature server endpoint from env variable
   let envValue = process.env[envName];
   if (!envValue) {
-    throw new Error(errorMessage);
+    throw new Error(`[ERROR] ${errorMessage}`);
   }
   envValue = envValue.trim().toLowerCase();
   log(`${envName} from env is: ${envValue}`);
