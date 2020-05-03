@@ -48,8 +48,7 @@ workflows:
       - node13
   deploy:
     jobs:     
-      - deploy-npm:
-          type: approval # <<< Deploy only after manual approval in the CircleCI web application.
+      - deploy-npm:          
           filters: # <<< Deploy only Tags
             tags:
               only: /^v.*/
