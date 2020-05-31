@@ -19,8 +19,11 @@ describe("isFeatureEnabled - negative flows", () => {
     const isFeatureEnabled = await API.isFeatureEnabled(extensionName, featureToggleName);
 
     expect(isFeatureEnabled).to.be.false; // on error return false
-    expect(loggerSpy.callCount).to.equal(1);
-    expect(loggerSpy.args[0][0]).to.equal(errMessage); // exception error
+    expect(loggerSpy.callCount).to.equal(2);
+
+    const infoMessage = `Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`;
+    expect(loggerSpy.args[0][0]).to.equal(infoMessage); // infoMessage
+    expect(loggerSpy.args[1][0]).to.equal(errMessage); // exception error
   };
 
   it("Test - isFeatureEnabled - extension name is empty - isFeatureEnabled returns false", async () => {

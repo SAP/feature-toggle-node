@@ -6,7 +6,7 @@ import { Unleash } from "unleash-client";
 
 export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
   log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
-  
+
   const ftName = `${extensionName}.${featureToggleName}`;
   try {
     if (!extensionName) {
