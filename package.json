@@ -34,7 +34,7 @@
     "@types/mocha": "^7.0.1",
     "@types/rimraf": "3.0.0",
     "@types/sinon": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "2.31.0",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
     "@typescript-eslint/parser": "2.34.0",
     "chai": "^4.2.0",
     "eslint": "6.8.0",
@@ -47,8 +47,8 @@
     "rimraf": "3.0.2",
     "sinon": "^9.0.2",
     "source-map-support": "0.5.19",
-    "ts-node": "8.10.1",
-    "typescript": "3.9.2"
+    "ts-node": "8.10.2",
+    "typescript": "3.9.3"
   },
   "mocha": {
     "require": [
