@@ -81,6 +81,6 @@
   "dependencies": {
     "await-to-js": "^2.1.1",
     "parse-duration": "^0.4.4",
-    "unleash-client": "^3.3.3"
+    "unleash-client": "^3.3.5"
   }
 }
