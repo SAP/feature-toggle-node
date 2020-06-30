@@ -30,7 +30,7 @@ export class AppStudioMultiStrategy extends appstudioStrategy {
     // context.currentEnvironment - The Environment that the extension is running on (calculated in this client)
     // parameters.environments // The Environments that the extension is allowed to be enabled on (list is defined on the server)
     if (!!context.currentEnvironment && parameters.environments && parameters.environments.indexOf(context.currentEnvironment) !== -1) {
-      //check that the app this extension is running on is in the apps list defined in the server
+      //check that the environment this extension is running on is in the environments list defined in the server
       return true;
     }
     // infrastructures
