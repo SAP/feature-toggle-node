@@ -8,6 +8,7 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
   log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
 
   const ftName = `${extensionName}.${featureToggleName}`;
+
   try {
     if (!extensionName) {
       throw new Error("Feature toggle extension name can not be empty, null or undefined");

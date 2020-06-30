@@ -24,6 +24,7 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
+    //customHeaders: {"authorization" : ""},
   });
 
   const unleashClientReadyPromise = getUnleashClientReadyPromise(extensionName, unleashClient, serverArgs);

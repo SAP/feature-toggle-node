@@ -9,6 +9,8 @@ describe("Test context manager", () => {
   const extensionNameB = "bbb";
 
   const USER = "koko@sap.com";
+  const ENVIRONMENT = "prod";
+  const LANDSCAPE = "eu10";
   let contextMap;
 
   afterEach(() => {
@@ -19,6 +21,8 @@ describe("Test context manager", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
       USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
     });
 
     contextMap = new Map<string, AppStudioMultiContext>();
@@ -28,15 +32,6 @@ describe("Test context manager", () => {
     expect(() => {
       contextManager.getContextFromMap(extensionName, contextMap);
     }).to.throw(errorMessage);
-  }
-
-  function testContext(context: AppStudioMultiContext, subaccount: string, user: string, ws: string): void {
-    expect(context.currentApp).to.be.empty;
-    expect(context.currentIaas).to.be.empty;
-    expect(context.currentRegion).to.be.empty;
-    expect(context.currentCfSubAccount).to.equal(subaccount);
-    expect(context.currentUser).to.equal(user);
-    expect(context.currentWs).to.equal(ws);
   }
 
   it("Test getContext - positive flow", () => {
@@ -62,28 +57,50 @@ describe("Test context manager", () => {
   it("Test context - getContext - getting the expected context values - positive flow", () => {
     //WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
 
-    // create context - NOT in cache -> create a new one
-    const contextA = contextManager.getContextFromMap(extensionNameA, contextMap);
+    const expectedContext: AppStudioMultiContext = {
+      currentEnvironment: ENVIRONMENT,
+      currentInfrastructure: "",
+      currentLandscape: LANDSCAPE,
+      currentCfSubAccount: "azureconseu",
+      currentUser: USER,
+      currentWs: "ws-n8vmz",
+    };
 
-    testContext(contextA, "azureconseu", USER, "ws-n8vmz");
+    // create context - NOT in cache -> create a new one
+    const contextA: AppStudioMultiContext = contextManager.getContextFromMap(extensionNameA, contextMap);
+
+    expect(contextA).to.deep.equal(expectedContext);
   });
 
   it("Test context - getContext - getting the expected context values - positive flow", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://consumer-trial-workspaces-ws-9gzgq.eu10.trial.applicationstudio.cloud.sap/",
       USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
     });
+
+    const expectedContext: AppStudioMultiContext = {
+      currentEnvironment: ENVIRONMENT,
+      currentInfrastructure: "",
+      currentLandscape: LANDSCAPE,
+      currentCfSubAccount: "consumer-trial",
+      currentUser: USER,
+      currentWs: "ws-9gzgq",
+    };
 
     // create context - NOT in cache -> create a new one
     const contextA = contextManager.getContextFromMap(extensionNameA, contextMap);
 
-    testContext(contextA, "consumer-trial", USER, "ws-9gzgq");
+    expect(contextA).to.deep.equal(expectedContext);
   });
 
   it("Test context - getContext - getting error for lack of '-workspaces-ws-' in WS_BASE_URL - negative flow", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "https://azureconseun8vmz.eu20",
       USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -93,6 +110,8 @@ describe("Test context manager", () => {
     sinon.stub(process, "env").value({
       WS_BASE_URL: "http://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
       USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -101,16 +120,33 @@ describe("Test context manager", () => {
   it("Test context - getContext - getting error for no WS_BASE_URL env parameter - negative flow", () => {
     sinon.stub(process, "env").value({
       USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
     });
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env WS_BASE_URL was NOT found in the environment variables");
   });
 
   it("Test context - getContext - getting error for no USER_NAME env parameter - negative flow", () => {
-    sinon.stub(process, "env").value({
-      WS_BASE_URL: "https://azureconseu-workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
-    });
+    sinon.stub(process, "env").value({});
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env USER_NAME was NOT found in the environment variables");
+  });
+
+  it("Test context - getContext - getting error for no LANDSCAPE_ENVIRONMENT env parameter - negative flow", () => {
+    sinon.stub(process, "env").value({
+      USER_NAME: USER,
+    });
+
+    testNoEnvError(extensionNameA, contextMap, "Feature toggle env LANDSCAPE_ENVIRONMENT was NOT found in the environment variables");
+  });
+
+  it("Test context - getContext - getting error for no LANDSCAPE_NAME env parameter - negative flow", () => {
+    sinon.stub(process, "env").value({
+      USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+    });
+
+    testNoEnvError(extensionNameA, contextMap, "Feature toggle env LANDSCAPE_NAME was NOT found in the environment variables");
   });
 });
