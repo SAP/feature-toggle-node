@@ -5,9 +5,9 @@ import { AppStudioMultiContext } from "./appstudio_context";
 const APP_STUDIO_MULTI = "AppStudioMulti";
 
 export interface AppStudioMultiParameters {
-  apps: string;
-  iaass: string;
-  regions: string;
+  environments: string; // apps
+  infrastructures: string; //iaass
+  landscapes: string; // regions
   subaccounts: string;
   users: string;
   wss: string;
@@ -22,23 +22,23 @@ export class AppStudioMultiStrategy extends appstudioStrategy {
   isEnabled(parameters: AppStudioMultiParameters, context: AppStudioMultiContext): boolean {
     // Check if the user has any restrictions defined in the strategy (defined in the FT server)
     // !! returns false for: null,undefined,0,"",false
-    if (!parameters.apps && !parameters.iaass && !parameters.regions && !parameters.subaccounts && !parameters.users && !parameters.wss) {
+    if (!parameters.environments && !parameters.infrastructures && !parameters.landscapes && !parameters.subaccounts && !parameters.users && !parameters.wss) {
       // No restriction from the strategy side
       return true; // strategy returns true. if the enabled button in the FT server is "on" the feature returns enabled
     }
 
-    // context.currentApp - The app that the extension is running on (calculated in this client)
-    // parameters.apps // The apps that the extension is allowed to be enabled on (list is defined on the server)
-    if (!!context.currentApp && parameters.apps && parameters.apps.indexOf(context.currentApp) !== -1) {
-      //check that the app this extension is running on is in the apps list defined in the server
+    // context.currentEnvironment - The Environment that the extension is running on (calculated in this client)
+    // parameters.environments // The Environments that the extension is allowed to be enabled on (list is defined on the server)
+    if (!!context.currentEnvironment && parameters.environments && parameters.environments.indexOf(context.currentEnvironment) !== -1) {
+      //check that the environment this extension is running on is in the environments list defined in the server
       return true;
     }
-    // iaass
-    if (!!context.currentIaas && parameters.iaass && parameters.iaass.indexOf(context.currentIaas) !== -1) {
+    // infrastructures
+    if (!!context.currentInfrastructure && parameters.infrastructures && parameters.infrastructures.indexOf(context.currentInfrastructure) !== -1) {
       return true;
     }
-    // regions
-    if (!!context.currentRegion && parameters.regions && parameters.regions.indexOf(context.currentRegion) !== -1) {
+    // landscapes
+    if (!!context.currentLandscape && parameters.landscapes && parameters.landscapes.indexOf(context.currentLandscape) !== -1) {
       return true;
     }
     // subaccounts
