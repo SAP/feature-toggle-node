@@ -1,3 +1,15 @@
+<a name="1.0.4"></a>
+
+# 1.0.4 (2020-07-1)
+
+### Features
+
+- Added support for "environments" and "landscapes" strategies 
+
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.3"></a>
 
 # 1.0.3 (2020-05-31)
