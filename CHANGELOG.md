@@ -1,3 +1,15 @@
+<a name="1.0.5"></a>
+
+# 1.0.5 (2020-07-23)
+
+### Features
+
+- Added support for "ready" and "registered" events of the unleash-client dependency 
+
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.4"></a>
 
 # 1.0.4 (2020-07-1)
