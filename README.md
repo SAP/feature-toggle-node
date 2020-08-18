@@ -68,9 +68,3 @@ import { isFeatureEnabled } from "@sap-devx/feature-toggle-node";
 
 ## How to obtain support
 Open an issue within this GitHub repository.
-
-
-## License
-Copyright (c) 2019-2020 SAP SE or an SAP affiliate company. All rights reserved.
-
-This file is licensed under the Apache 2.0 License [except as noted otherwise in the LICENSE file](https://github.com/sap/feature-toggle-node/blob/master/README.md).
