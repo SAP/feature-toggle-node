@@ -23,6 +23,18 @@ jobs:
       - run: ls -la
       - run: echo node 13 job finished successfully
 
+  compliance:
+    docker:
+      - image: circleci/python:3.6.4
+    working_directory: ~/workdir
+    steps:
+      - checkout
+      - run:
+          name: compliance check
+          command: |
+            pip3 install --user reuse
+            ~/.local/bin/reuse lint
+
   deploy-npm:
     docker:
       - image: circleci/node:10.19
@@ -46,6 +58,7 @@ workflows:
     jobs:
       - node10
       - node13
+      - compliance
   deploy:
     jobs:     
       - deploy-npm:          
