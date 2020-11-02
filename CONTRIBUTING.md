@@ -79,7 +79,7 @@ Make sure the remote master branch contains the code for the new release and fol
     <br><br>Example:
 
     ```
-    npm version patch -m "New release version %s"
+    npm version patch -m "feat: new release version %s"
     ```
     
     Note: If `npm run ci` fail you cannot create a release.<br>
