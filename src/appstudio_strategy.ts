@@ -11,6 +11,7 @@ export interface AppStudioMultiParameters {
   subaccounts: string;
   users: string;
   wss: string;
+  tenantids: string;
 }
 
 export class AppStudioMultiStrategy extends appstudioStrategy {
@@ -22,7 +23,7 @@ export class AppStudioMultiStrategy extends appstudioStrategy {
   isEnabled(parameters: AppStudioMultiParameters, context: AppStudioMultiContext): boolean {
     // Check if the user has any restrictions defined in the strategy (defined in the FT server)
     // !! returns false for: null,undefined,0,"",false
-    if (!parameters.environments && !parameters.infrastructures && !parameters.landscapes && !parameters.subaccounts && !parameters.users && !parameters.wss) {
+    if (!parameters.environments && !parameters.infrastructures && !parameters.landscapes && !parameters.subaccounts && !parameters.users && !parameters.wss && !parameters.tenantids) {
       // No restriction from the strategy side
       return true; // strategy returns true. if the enabled button in the FT server is "on" the feature returns enabled
     }
@@ -51,6 +52,10 @@ export class AppStudioMultiStrategy extends appstudioStrategy {
     }
     // wss
     if (!!context.currentWs && parameters.wss && parameters.wss.indexOf(context.currentWs) !== -1) {
+      return true;
+    }
+    // tenantids
+    if (!!context.currentTenantId && parameters.tenantids && parameters.tenantids.indexOf(context.currentTenantId) !== -1) {
       return true;
     }
 

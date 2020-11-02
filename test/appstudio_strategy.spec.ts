@@ -34,6 +34,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "dev",
@@ -42,6 +43,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -57,6 +59,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "dev",
@@ -65,6 +68,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -80,6 +84,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -88,6 +93,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -103,6 +109,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -111,6 +118,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -126,6 +134,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "sub1,sub2,sub3",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -134,6 +143,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "sub3",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -149,6 +159,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "koko@koko.com, koko4@koko.com",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -157,6 +168,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "sub3",
       currentUser: "koko@koko.com",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -172,6 +184,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "ws-wer,ws-popo,ws-koko",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -180,6 +193,32 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "sub3",
       currentUser: "",
       currentWs: "ws-wer",
+      currentTenantId: "",
+    };
+
+    const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
+
+    expect(isEnabled).to.be.true;
+  });
+
+  it("Test - isEnabled - returns true when currentTenantId (client) match the server values (serverParams) for tenantids", () => {
+    const serverParams: appstudioStrategy.AppStudioMultiParameters = {
+      environments: "",
+      infrastructures: "",
+      landscapes: "",
+      subaccounts: "",
+      users: "",
+      wss: "",
+      tenantids: "111-a111-111, 222-b222-222",
+    };
+    const context: appstudioContext.AppStudioMultiContext = {
+      currentEnvironment: "",
+      currentInfrastructure: "",
+      currentLandscape: "",
+      currentCfSubAccount: "sub3",
+      currentUser: "",
+      currentWs: "",
+      currentTenantId: "111-a111-111",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -195,6 +234,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "",
       users: "",
       wss: "",
+      tenantids: "",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "dev",
@@ -203,6 +243,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
@@ -218,6 +259,7 @@ describe("Strategy unit tests", () => {
       subaccounts: "subaccount1",
       users: "user1",
       wss: "wss1",
+      tenantids: "111-a111-111",
     };
     const context: appstudioContext.AppStudioMultiContext = {
       currentEnvironment: "",
@@ -226,6 +268,7 @@ describe("Strategy unit tests", () => {
       currentCfSubAccount: "",
       currentUser: "",
       currentWs: "",
+      currentTenantId: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);

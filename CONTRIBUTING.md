@@ -37,8 +37,13 @@ The team is monitoring for pull requests. We will review your pull request and e
 4. Run `npm run ci` to ensure all code compiles,tests pass, linting etc.
 5. See commit prefix section.
 
+## Commit Messages
 
-## Commit Prefix
+This project uses [conventional commits standard](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#specification) with the [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional).
+Recommanded: Use `git cz` to build conventional commit messages.
+- requires [commitizen](https://github.com/commitizen/cz-cli#installing-the-command-line-tool) to be installed.
+
+### Commit Prefix
 
 - [feat] (new feature for the user, not a new feature for build script)
 - [fix] (bug fix for the user, not a fix to a build script)
@@ -74,7 +79,7 @@ Make sure the remote master branch contains the code for the new release and fol
     <br><br>Example:
 
     ```
-    npm version patch -m "New release version %s"
+    npm version patch -m "feat: new release version %s"
     ```
     
     Note: If `npm run ci` fail you cannot create a release.<br>

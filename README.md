@@ -1,6 +1,9 @@
 [![CircleCI](https://circleci.com/gh/SAP/feature-toggle-node.svg?style=svg)](https://circleci.com/gh/SAP/feature-toggle-node)
+[![Coverage Status](https://coveralls.io/repos/github/SAP/feature-toggle-node/badge.svg?branch=master)](https://coveralls.io/github/SAP/feature-toggle-node?branch=master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![Commitizen friendly](https://api.dependabot.com/badges/status?host=github&repo=SAP/feature-toggle-node)](https://dependabot.com/)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![dependentbot](https://api.dependabot.com/badges/status?host=github&repo=SAP/feature-toggle-node)](https://dependabot.com/)
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/feature-toggle-node)](https://api.reuse.software/info/github.com/SAP/feature-toggle-node)
 
 # feature-toggle-node 
 A Node.js module for enabling or disabling Node.js-based SAP Business Application Studio features.
@@ -68,9 +71,3 @@ import { isFeatureEnabled } from "@sap-devx/feature-toggle-node";
 
 ## How to obtain support
 Open an issue within this GitHub repository.
-
-
-## License
-Copyright (c) 2019-2020 SAP SE or an SAP affiliate company. All rights reserved.
-
-This file is licensed under the Apache 2.0 License [except as noted otherwise in the LICENSE file](https://github.com/sap/feature-toggle-node/blob/master/README.md).

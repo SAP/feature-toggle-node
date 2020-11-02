@@ -11,6 +11,7 @@ describe("Test context manager", () => {
   const USER = "koko@sap.com";
   const ENVIRONMENT = "prod";
   const LANDSCAPE = "eu10";
+  const TENANTID = "111-a11-111";
   let contextMap;
 
   afterEach(() => {
@@ -23,6 +24,7 @@ describe("Test context manager", () => {
       USER_NAME: USER,
       LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
       LANDSCAPE_NAME: LANDSCAPE,
+      TENANT_ID: TENANTID,
     });
 
     contextMap = new Map<string, AppStudioMultiContext>();
@@ -64,6 +66,7 @@ describe("Test context manager", () => {
       currentCfSubAccount: "azureconseu",
       currentUser: USER,
       currentWs: "ws-n8vmz",
+      currentTenantId: TENANTID,
     };
 
     // create context - NOT in cache -> create a new one
@@ -78,6 +81,7 @@ describe("Test context manager", () => {
       USER_NAME: USER,
       LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
       LANDSCAPE_NAME: LANDSCAPE,
+      TENANT_ID: TENANTID,
     });
 
     const expectedContext: AppStudioMultiContext = {
@@ -87,6 +91,7 @@ describe("Test context manager", () => {
       currentCfSubAccount: "consumer-trial",
       currentUser: USER,
       currentWs: "ws-9gzgq",
+      currentTenantId: TENANTID,
     };
 
     // create context - NOT in cache -> create a new one
@@ -101,6 +106,7 @@ describe("Test context manager", () => {
       USER_NAME: USER,
       LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
       LANDSCAPE_NAME: LANDSCAPE,
+      TENANT_ID: TENANTID,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -112,6 +118,7 @@ describe("Test context manager", () => {
       USER_NAME: USER,
       LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
       LANDSCAPE_NAME: LANDSCAPE,
+      TENANT_ID: TENANTID,
     });
 
     testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/`);
@@ -122,6 +129,7 @@ describe("Test context manager", () => {
       USER_NAME: USER,
       LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
       LANDSCAPE_NAME: LANDSCAPE,
+      TENANT_ID: TENANTID,
     });
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env WS_BASE_URL was NOT found in the environment variables");
@@ -148,5 +156,15 @@ describe("Test context manager", () => {
     });
 
     testNoEnvError(extensionNameA, contextMap, "Feature toggle env LANDSCAPE_NAME was NOT found in the environment variables");
+  });
+
+  it("Test context - getContext - getting error for no TENANT_ID env parameter - negative flow", () => {
+    sinon.stub(process, "env").value({
+      USER_NAME: USER,
+      LANDSCAPE_ENVIRONMENT: ENVIRONMENT,
+      LANDSCAPE_NAME: LANDSCAPE,
+    });
+
+    testNoEnvError(extensionNameA, contextMap, "Feature toggle env TENANT_ID was NOT found in the environment variables");
   });
 });
