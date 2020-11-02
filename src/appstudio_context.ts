@@ -5,6 +5,7 @@ const USER_NAME = "USER_NAME";
 const WS_BASE_URL = "WS_BASE_URL";
 const LANDSCAPE_ENVIRONMENT = "LANDSCAPE_ENVIRONMENT";
 const LANDSCAPE_NAME = "LANDSCAPE_NAME";
+const TENANT_ID = "TENANT_ID";
 
 const fullFormatWsBaseUrl = "Expected format: https://<CF sub account>-workspaces-ws-<id>.<cluster region>.<domain>/";
 
@@ -15,6 +16,7 @@ export interface AppStudioMultiContext extends appstudioContext {
   currentCfSubAccount: string;
   currentUser: string;
   currentWs: string;
+  currentTenantId: string;
 }
 
 function extractCfSubAccountAndWs(wsBaseUrlString: string, context: AppStudioMultiContext): void {
@@ -45,6 +47,8 @@ export function createContextObject(): AppStudioMultiContext {
   const environment = getEnv(LANDSCAPE_ENVIRONMENT, "Feature toggle env LANDSCAPE_ENVIRONMENT was NOT found in the environment variables");
   // get the landscape from the env
   const landscape = getEnv(LANDSCAPE_NAME, "Feature toggle env LANDSCAPE_NAME was NOT found in the environment variables");
+  // get the tenant id from the env
+  const tenantId = getEnv(TENANT_ID, "Feature toggle env TENANT_ID was NOT found in the environment variables");
 
   // Create the context
   const context: AppStudioMultiContext = {
@@ -54,6 +58,7 @@ export function createContextObject(): AppStudioMultiContext {
     currentCfSubAccount: "", // will be added in the next function
     currentUser: userName,
     currentWs: "", // will be added in the next function
+    currentTenantId: tenantId,
   };
 
   // get the WS and SubAccount from WS_BASE_URL env
