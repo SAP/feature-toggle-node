@@ -28,6 +28,11 @@
   },
   "author": "SAP SE",
   "license": "Apache-2.0",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "parse-duration": "^0.4.4",
+    "unleash-client": "^3.4.0"
+  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "1.0.1",
     "@types/chai": "^4.2.8",
@@ -87,12 +92,7 @@
     "lines": 100,
     "functions": 100,
     "statements": 100
-  },
-  "dependencies": {
-    "await-to-js": "^2.1.1",
-    "parse-duration": "^0.4.4",
-    "unleash-client": "^3.3.5"
-  },
+  },  
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
