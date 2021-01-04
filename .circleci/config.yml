@@ -23,9 +23,9 @@ jobs:
       - run: ls -la
       - run: echo node 12 job finished successfully
 
-  node13:
+  node14:
     docker:
-      - image: circleci/node:13
+      - image: circleci/node:14
     working_directory: ~/repo    
     steps:
       - checkout      
@@ -45,7 +45,7 @@ jobs:
             COVERALLS_SERVICE_NAME: circle-ci
             COVERALLS_GIT_BRANCH: ${CIRCLE_BRANCH}
       - run: ls -la
-      - run: echo node 13 job finished successfully
+      - run: echo node 14 job finished successfully
 
 
   compliance:
@@ -63,7 +63,7 @@ jobs:
 
   deploy-npm:
     docker:
-      - image: circleci/node:13
+      - image: circleci/node:14
     working_directory: ~/repo    
     steps:
       - checkout      
@@ -84,7 +84,7 @@ workflows:
     jobs:
       - node10
       - node12
-      - node13
+      - node14
       - compliance
   deploy:
     jobs:     
