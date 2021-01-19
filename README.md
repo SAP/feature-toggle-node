@@ -49,9 +49,11 @@ Environment variables example:
 
 ```
 "FT_SERVER_ENDPOINT": "http://unleash.herokuapp.com",                
-"WS_BASE_URL": "https://cfsubaccount-workspaces-ws-id.region.applicationstudio.cloud.sap",
+"WS_BASE_URL": "https://workspaces-ws-id.region.applicationstudio.cloud.sap",
 "USER_NAME": "user@hotmail.com",
 "FT_CLIENT_REFRESH_INTERVAL": "6s",
+"TENANT_ID" : "b5c05535-9495-4050-9d68-4356d0d34136",
+"TENANT_NAME": "cfsubaccount" // subaccount
 "SHOW_LOG": "true",
 ```
 
