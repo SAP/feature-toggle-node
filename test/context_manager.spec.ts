@@ -13,7 +13,7 @@ describe("Test context manager", () => {
   const landscape = "eu10";
   const tenantId = "111-a11-111";
   const subAccount = "azureconseu";
-  const ws = "ws-n8vmz";
+  const ws = "workspaces-ws-n8vmz";
   let contextMap;
 
   afterEach(() => {
@@ -22,12 +22,12 @@ describe("Test context manager", () => {
 
   beforeEach(() => {
     sinon.stub(process, "env").value({
-      WS_BASE_URL: "https://workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
       USER_NAME: user,
       LANDSCAPE_ENVIRONMENT: env,
       LANDSCAPE_NAME: landscape,
       TENANT_ID: tenantId,
       TENANT_NAME: subAccount,
+      WORKSPACE_ID: ws,
     });
 
     contextMap = new Map<string, AppStudioMultiContext>();
@@ -63,8 +63,6 @@ describe("Test context manager", () => {
     }
 
     it("getting the expected context values", () => {
-      //WS_BASE_URL: "https://workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
-
       const expectedContext: AppStudioMultiContext = {
         currentEnvironment: env,
         currentInfrastructure: "",
@@ -81,33 +79,7 @@ describe("Test context manager", () => {
       expect(contextA).to.deep.equal(expectedContext);
     });
 
-    it("getting error for lack of 'workspaces-ws-' in WS_BASE_URL", () => {
-      sinon.stub(process, "env").value({
-        WS_BASE_URL: "https://azureconseun8vmz.eu20",
-        USER_NAME: user,
-        LANDSCAPE_ENVIRONMENT: env,
-        LANDSCAPE_NAME: landscape,
-        TENANT_ID: tenantId,
-        TENANT_NAME: subAccount,
-      });
-
-      testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://workspaces-ws-<id>.<cluster region>.<domain>/`);
-    });
-
-    it("getting error for when using http instead of https in WS_BASE_URL", () => {
-      sinon.stub(process, "env").value({
-        WS_BASE_URL: "http://workspaces-ws-n8vmz.eu20.applicationstudio.cloud.sap/",
-        USER_NAME: user,
-        LANDSCAPE_ENVIRONMENT: env,
-        LANDSCAPE_NAME: landscape,
-        TENANT_ID: tenantId,
-        TENANT_NAME: subAccount,
-      });
-
-      testNoEnvError(extensionNameA, contextMap, `Feature toggle env WS_BASE_URL is NOT in the correct format. Expected format: https://workspaces-ws-<id>.<cluster region>.<domain>/`);
-    });
-
-    it("getting error for no WS_BASE_URL env parameter", () => {
+    it("getting error for no WORKSPACE_ID environment variable", () => {
       sinon.stub(process, "env").value({
         USER_NAME: user,
         LANDSCAPE_ENVIRONMENT: env,
@@ -116,10 +88,10 @@ describe("Test context manager", () => {
         TENANT_NAME: subAccount,
       });
 
-      testNoEnvError(extensionNameA, contextMap, "Feature toggle env WS_BASE_URL was NOT found in the environment variables");
+      testNoEnvError(extensionNameA, contextMap, "Feature toggle env WORKSPACE_ID was NOT found in the environment variables");
     });
 
-    it("getting error for no TENANT_NAME env parameter", () => {
+    it("getting error for no TENANT_NAME environment variable", () => {
       sinon.stub(process, "env").value({
         USER_NAME: user,
         LANDSCAPE_ENVIRONMENT: env,
@@ -130,13 +102,13 @@ describe("Test context manager", () => {
       testNoEnvError(extensionNameA, contextMap, "Feature toggle env TENANT_NAME was NOT found in the environment variables");
     });
 
-    it("getting error for no USER_NAME env parameter", () => {
+    it("getting error for no USER_NAME environment variable", () => {
       sinon.stub(process, "env").value({});
 
       testNoEnvError(extensionNameA, contextMap, "Feature toggle env USER_NAME was NOT found in the environment variables");
     });
 
-    it("getting error for no LANDSCAPE_ENVIRONMENT env parameter", () => {
+    it("getting error for no LANDSCAPE_ENVIRONMENT environment variable", () => {
       sinon.stub(process, "env").value({
         USER_NAME: user,
       });
@@ -144,7 +116,7 @@ describe("Test context manager", () => {
       testNoEnvError(extensionNameA, contextMap, "Feature toggle env LANDSCAPE_ENVIRONMENT was NOT found in the environment variables");
     });
 
-    it("getting error for no TENANT_ID env parameter", () => {
+    it("getting error for no TENANT_ID environment variable", () => {
       sinon.stub(process, "env").value({
         USER_NAME: user,
         LANDSCAPE_ENVIRONMENT: env,
@@ -154,7 +126,7 @@ describe("Test context manager", () => {
       testNoEnvError(extensionNameA, contextMap, "Feature toggle env TENANT_ID was NOT found in the environment variables");
     });
 
-    it("getting error for no LANDSCAPE_NAME env parameter", () => {
+    it("getting error for no LANDSCAPE_NAME environment variable", () => {
       sinon.stub(process, "env").value({
         USER_NAME: user,
         LANDSCAPE_ENVIRONMENT: env,
