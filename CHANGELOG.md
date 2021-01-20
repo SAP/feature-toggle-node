@@ -1,3 +1,15 @@
+<a name="1.0.8"></a>
+
+# 1.0.8 (2021-01-20)
+
+### Features
+
+- Retrieving the sub account with the TENANT_NAME environment variable and the workspace with the WORKSPACE_ID environment variable instead of the WS_BASE_URL environment variable
+
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.7"></a>
 
 # 1.0.7 (2021-01-04)
