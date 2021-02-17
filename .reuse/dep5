@@ -4,5 +4,5 @@ Upstream-Contact: Lior Frenkel <lior.frenkel@sap.com>
 Source: https://github.com/SAP/feature-toggle-node
 
 Files: *
-Copyright: 2020 SAP SE or an SAP affiliate company and feature-toggle-node contributors
+Copyright: 2020-2021 SAP SE or an SAP affiliate company and feature-toggle-node contributors
 License: Apache-2.0
