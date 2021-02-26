@@ -37,6 +37,7 @@ export class AppStudioMultiStrategy extends Strategy {
   }
 
   // Check only the strategy parameters. the default strategy is calculated at the server side
+  /** Template method */
   isEnabled(parameters: AppStudioMultiParameters, context: AppStudioMultiContext): boolean {
     // Check if the user has any restrictions defined in the strategy (defined in the FT server)
     const isNotDefined = this.strategies.every((strategy) => !strategy.isDefined(parameters));
