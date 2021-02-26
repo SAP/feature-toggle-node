@@ -6,7 +6,7 @@ import { UnleashConfig } from "unleash-client/lib/unleash";
 import * as clientManager from "../src/unleash_client_manager";
 import * as serverArgs from "../src/server_arguments";
 import * as unleashClientWrapper from "../src/unleash_client_wrapper";
-import * as appStudioStrategies  from "../src/strategy/appStudioStrategies";
+import * as appStudioStrategies from "../src/strategy/appStudioStrategies";
 
 describe("Test unleash client manager", () => {
   const extensionNameA = "aaa";
@@ -84,11 +84,11 @@ describe("Test unleash client manager", () => {
   it("registerStrategies is called when creating a new client", async () => {
     prepGetUnleashClientTests();
 
-    const registerSpy = sinon.spy(appStudioStrategies, "registerStrategies");    
-    
+    const registerSpy = sinon.spy(appStudioStrategies, "registerStrategies");
+
     // create a new client
     await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap);
 
-    expect(registerSpy.callCount).to.equal(1);    
+    expect(registerSpy.callCount).to.equal(1);
   });
 });
