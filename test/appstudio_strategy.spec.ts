@@ -1,11 +1,14 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
 import { describe, afterEach, it } from "mocha";
-import * as appstudioStrategy from "../src/appstudio_strategy";
+import * as appstudioStrategy from "../src/strategy/appStudioMultiStrategy";
 import * as appstudioContext from "../src/appstudio_context";
+import { registerStrategies } from "../src/strategy/appStudioStrategies";
+import { EnvironmentsStrategy } from "../src/strategy/strategies";
 
 describe("Strategy unit tests", () => {
   const appStudioMultiStrategy = new appstudioStrategy.AppStudioMultiStrategy();
+  registerStrategies(appStudioMultiStrategy);
 
   afterEach(() => {
     sinon.restore();
@@ -19,6 +22,7 @@ describe("Strategy unit tests", () => {
       subaccounts: null,
       users: "",
       wss: "",
+      tenantids: "",
     };
 
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, null);
@@ -274,5 +278,11 @@ describe("Strategy unit tests", () => {
     const isEnabled = appStudioMultiStrategy.isEnabled(serverParams, context);
 
     expect(isEnabled).to.be.false;
+  });
+
+  it("register throw error when strategy already in the strategy list", () => {
+    expect(() => {
+      appStudioMultiStrategy.register([new EnvironmentsStrategy()]);
+    }).to.throw(`Strategy Environments_Strategy already registered`);
   });
 });
