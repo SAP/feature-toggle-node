@@ -20,7 +20,7 @@ async function createNewUnleashClient(extensionName: string, unleashClientMap: M
 
   //add the client to the map
   unleashClientMap.set(extensionName, client);
-
+  
   return client;
 }
 
