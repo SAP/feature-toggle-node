@@ -29,7 +29,7 @@
   "author": "SAP SE",
   "license": "Apache-2.0",
   "dependencies": {
-    "await-to-js": "2.1.1",
+    "await-to-js": "3.0.0",
     "parse-duration": "0.4.4",
     "unleash-client": "3.6.0"
   },
