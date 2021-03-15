@@ -2,7 +2,7 @@ import { AppStudioMultiContext } from "../appstudio_context";
 import { AppStudioStrategy } from "./appStudioStrategies";
 import { AppStudioMultiParameters } from "./appStudioMultiStrategy";
 
-export class EnvironmentsStrategy implements AppStudioStrategy {
+export class EnvironmentsStrategy extends AppStudioStrategy {
   getName(): string {
     return `Environments_Strategy`;
   }
@@ -19,7 +19,7 @@ export class EnvironmentsStrategy implements AppStudioStrategy {
   }
 }
 
-export class InfrastructuresStrategy implements AppStudioStrategy {
+export class InfrastructuresStrategy extends AppStudioStrategy {
   getName(): string {
     return `Infrastructures_Strategy`;
   }
@@ -36,7 +36,7 @@ export class InfrastructuresStrategy implements AppStudioStrategy {
   }
 }
 
-export class LandscapesStrategy implements AppStudioStrategy {
+export class LandscapesStrategy extends AppStudioStrategy {
   getName(): string {
     return `Landscapes_Strategy`;
   }
@@ -53,7 +53,7 @@ export class LandscapesStrategy implements AppStudioStrategy {
   }
 }
 
-export class SubAccountsStrategy implements AppStudioStrategy {
+export class SubAccountsStrategy extends AppStudioStrategy {
   getName(): string {
     return `SubAccounts_Strategy`;
   }
@@ -70,7 +70,7 @@ export class SubAccountsStrategy implements AppStudioStrategy {
   }
 }
 
-export class UsersStrategy implements AppStudioStrategy {
+export class UsersStrategy extends AppStudioStrategy {
   getName(): string {
     return `Users_Strategy`;
   }
@@ -87,7 +87,7 @@ export class UsersStrategy implements AppStudioStrategy {
   }
 }
 
-export class WssStrategy implements AppStudioStrategy {
+export class WssStrategy extends AppStudioStrategy {
   getName(): string {
     return `Wss_Strategy`;
   }
@@ -104,7 +104,7 @@ export class WssStrategy implements AppStudioStrategy {
   }
 }
 
-export class TenantIdsStrategy implements AppStudioStrategy {
+export class TenantIdsStrategy extends AppStudioStrategy {
   getName(): string {
     return `TenantIds_Strategy`;
   }
