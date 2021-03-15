@@ -6,6 +6,7 @@ import { UnleashConfig } from "unleash-client/lib/unleash";
 import * as clientManager from "../src/unleash_client_manager";
 import * as serverArgs from "../src/server_arguments";
 import * as unleashClientWrapper from "../src/unleash_client_wrapper";
+import * as appStudioStrategies from "../src/strategy/appStudioStrategies";
 
 describe("Test unleash client manager", () => {
   const extensionNameA = "aaa";
@@ -78,5 +79,16 @@ describe("Test unleash client manager", () => {
 
     const err = await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap).catch((err) => err.message);
     expect(err).to.equal("Failed to create Unleash client for extension aaa. Error message: TypeError: client.on is not a function");
+  });
+
+  it("registerStrategies is called when creating a new client", async () => {
+    prepGetUnleashClientTests();
+
+    const registerSpy = sinon.spy(appStudioStrategies, "registerStrategies");
+
+    // create a new client
+    await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap);
+
+    expect(registerSpy.callCount).to.equal(1);
   });
 });
