@@ -1,7 +1,8 @@
 import { Unleash } from "unleash-client";
 import * as ServerArgs from "./server_arguments";
 import { initializeUnleashClient } from "./unleash_client_wrapper";
-import { AppStudioMultiStrategy } from "./appstudio_strategy";
+import { AppStudioMultiStrategy } from "./strategy/appStudioMultiStrategy";
+import { registerStrategies } from "./strategy/appStudioStrategies";
 
 // Map of Unleash clients.
 // map key = extensionName
@@ -13,7 +14,9 @@ async function createNewUnleashClient(extensionName: string, unleashClientMap: M
   const serverArgs = ServerArgs.getServerArgs();
 
   //init client
-  const client = await initializeUnleashClient(extensionName, serverArgs, [new AppStudioMultiStrategy()]);
+  const appStudioMultiStrategy = new AppStudioMultiStrategy();
+  const client = await initializeUnleashClient(extensionName, serverArgs, [appStudioMultiStrategy]);
+  registerStrategies(appStudioMultiStrategy);
 
   //add the client to the map
   unleashClientMap.set(extensionName, client);
