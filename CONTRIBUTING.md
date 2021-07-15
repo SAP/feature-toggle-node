@@ -3,6 +3,13 @@
 Development is executed on GitHub. 
 Both core team members and external contributors send pull requests which go through the same review process.
 
+## Legal
+
+All contributors must sign the DCO
+
+- https://cla-assistant.io/SAP/feature-toggle-node
+
+This is managed automatically via https://cla-assistant.io/ pull request voter.
 
 ## Branch Organization
 
