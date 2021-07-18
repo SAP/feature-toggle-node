@@ -9,7 +9,6 @@
 # feature-toggle-node 
 A Node.js module for enabling or disabling Node.js-based SAP Business Application Studio features.
 
-
 ## Description
 This module is used to inquire if an SAP Business Application Studio feature toggle is enabled or disabled.
 
