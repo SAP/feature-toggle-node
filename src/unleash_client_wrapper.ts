@@ -2,6 +2,7 @@ import { initialize, Unleash, Strategy } from "unleash-client";
 import { log } from "./logger";
 import { ServerArgs } from "./server_arguments";
 import to from "await-to-js";
+import { UnleashConfig } from "unleash-client/lib/unleash";
 
 async function getUnleashClientRegisteredPromise(client: Unleash): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -29,13 +30,17 @@ async function getUnleashClientReadyPromise(client: Unleash): Promise<void> {
 
 export async function initializeUnleashClient(extensionName: string, serverArgs: ServerArgs, customStrategies: Strategy[]): Promise<Unleash> {
   //create a new unleash client
-  const unleashClient = initialize({
+  const options: UnleashConfig = {
     appName: extensionName,
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
-    //customHeaders: {"authorization" : ""},
-  });
+  };
+
+  if (serverArgs.ftServerToken) {
+    options.customHeaders = { authorization: serverArgs.ftServerToken };
+  }
+  const unleashClient = initialize(options);
 
   const readyPromise = getUnleashClientReadyPromise(unleashClient);
   const registeredPromise = getUnleashClientRegisteredPromise(unleashClient);
