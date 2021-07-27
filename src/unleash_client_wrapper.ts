@@ -36,6 +36,7 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
   };
+
   if (serverArgs.ftServerToken) {
     options.customHeaders = { authorization: serverArgs.ftServerToken };
   }
