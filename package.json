@@ -1,6 +1,6 @@
 {
   "name": "@sap-devx/feature-toggle-node",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "lib/api.js",
   "types": "lib/api.js",
