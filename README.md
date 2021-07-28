@@ -43,9 +43,9 @@ To run the feature-toggle-node **locally**, you need to provide the following en
 - `WORKSPACE_ID` - ID of the workspace (mandatory)
 - `TENANT_ID` - (mandatory)
 - `TENANT_NAME` - (mandatory)
-- `LANDSCAPE_ENVIRONMENT` -  (mandatory)
-- `LANDSCAPE_NAME` -  (mandatory)
-- `FT_TOKEN` -  Value of the feature toggle server API token (optional)
+- `LANDSCAPE_ENVIRONMENT` - (mandatory)
+- `LANDSCAPE_NAME` - (mandatory)
+- `FT_TOKEN` - Value of the feature toggle server API token (optional)
 - `FT_CLIENT_REFRESH_INTERVAL` - Feature toggle client refresh interval (optional, default value: 10s)
 - `SHOW_LOG` - If true, displays console logs (optional)
 
