@@ -4,11 +4,13 @@ import parseDuration from "parse-duration";
 
 export const ENV_FT_SERVER_ENDPOINT_NAME = "FT_SERVER_ENDPOINT";
 export const ENV_REFRESH_INTERVAL_NAME = "FT_CLIENT_REFRESH_INTERVAL";
+export const ENV_FT_TOKEN = "FT_TOKEN";
 const DEFAULT_REFRESH_INTERVAL = 10000; //10 sec
 
 export interface ServerArgs {
   ftServerEndPoint: string;
   ftServerInterval: number;
+  ftServerToken: string | undefined;
 }
 
 // get featureToggle server url and client refresh interval from environment variables
@@ -31,5 +33,6 @@ export function getServerArgs(): ServerArgs {
     log(`[ERROR] client refresh interval not set or in incorrect pattern, using the default interval: ${DEFAULT_REFRESH_INTERVAL}`);
   }
   log(`client refresh interval is: ${interval}`);
-  return { ftServerEndPoint: endpoint, ftServerInterval: interval };
+
+  return { ftServerEndPoint: endpoint, ftServerInterval: interval, ftServerToken: process.env[ENV_FT_TOKEN] };
 }
