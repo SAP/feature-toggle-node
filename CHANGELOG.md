@@ -1,3 +1,16 @@
+<a name="1.0.9"></a>
+
+# 1.0.9 (2021-07-28)
+
+### Features
+
+- Code refactoring
+- Support for customHeader. Retrieving authorisation token from FT_TOKEN environment variable
+
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.8"></a>
 
 # 1.0.8 (2021-01-20)
