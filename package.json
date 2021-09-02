@@ -31,7 +31,7 @@
   "dependencies": {
     "await-to-js": "3.0.0",
     "parse-duration": "0.4.4",
-    "unleash-client": "3.8.0"
+    "unleash-client": "3.4.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "1.0.1",
