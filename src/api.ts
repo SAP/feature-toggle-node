@@ -4,6 +4,8 @@ import * as contextManager from "./context_manager";
 import { log } from "./logger";
 import { Unleash } from "unleash-client";
 
+const initializeAttemptMap = new Map<string, number>();
+
 export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
   log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
 
@@ -18,6 +20,11 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
       throw new Error("Feature toggle name can not be empty, null or undefined");
     }
 
+    const attemptNumber = initializeAttemptMap.get(extensionName);
+    if (attemptNumber && attemptNumber >= 2) {
+      throw new Error(`The limit of attempts to create unleashclient has been reached`);
+    }
+
     //get unleash client
     const client: Unleash = await clientManager.getUnleashClient(extensionName);
 
@@ -30,6 +37,11 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
   } catch (err) {
     const logErr = `[ERROR] Failed to determine if feature toggle ${ftName} is enabled. Returning feature DISABLED. Error message: ${err}`;
     log(logErr);
+    if (logErr.includes("401")) {
+      let num = initializeAttemptMap.get(extensionName);
+      num = (num || 0) + 1;
+      initializeAttemptMap.set(extensionName, num);
+    }
     return false; // error creating an Unleash client -> return feature is disabled
   }
 }
