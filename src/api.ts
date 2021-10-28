@@ -4,7 +4,18 @@ import * as contextManager from "./context_manager";
 import { log } from "./logger";
 import { Unleash } from "unleash-client";
 
+// map key = extensionName
+// map value = number of attempts to establish unleash client
 const initializeAttemptMap = new Map<string, number>();
+const limitNumber = 2;
+
+function handleUnauthorisedError(extensionName: string, logError: string): void {
+  if (logError.includes("401")) {
+    let num = initializeAttemptMap.get(extensionName);
+    num = (num || 0) + 1;
+    initializeAttemptMap.set(extensionName, num);
+  }
+}
 
 export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
   log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
@@ -20,9 +31,10 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
       throw new Error("Feature toggle name can not be empty, null or undefined");
     }
 
+    // handle unauthorised calls. Once limit is reached, no calls for creation of new unleash client will be issued to server.
     const attemptNumber = initializeAttemptMap.get(extensionName);
-    if (attemptNumber && attemptNumber >= 2) {
-      throw new Error(`The limit of attempts to create unleashclient has been reached`);
+    if (attemptNumber && attemptNumber >= limitNumber) {
+      throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached.`);
     }
 
     //get unleash client
@@ -37,11 +49,7 @@ export async function isFeatureEnabled(extensionName: string, featureToggleName:
   } catch (err) {
     const logErr = `[ERROR] Failed to determine if feature toggle ${ftName} is enabled. Returning feature DISABLED. Error message: ${err}`;
     log(logErr);
-    if (logErr.includes("401")) {
-      let num = initializeAttemptMap.get(extensionName);
-      num = (num || 0) + 1;
-      initializeAttemptMap.set(extensionName, num);
-    }
+    handleUnauthorisedError(extensionName, logErr);
     return false; // error creating an Unleash client -> return feature is disabled
   }
 }
