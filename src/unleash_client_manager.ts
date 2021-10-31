@@ -11,7 +11,8 @@ const unleashClientMap = new Map<string, Unleash>();
 
 interface InitializeAttempt {
   numAttempt: number;
-  timeAttempt: Date;
+  timeAttempt: number;
+  isBlocked: boolean;
 }
 
 // map key = extensionName
@@ -22,7 +23,28 @@ const limitNumber = 2;
 function handleUnauthorisedError(extensionName: string): void {
   let num = initializeAttemptMap.get(extensionName)?.numAttempt;
   num = (num || 0) + 1;
-  initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: new Date() });
+  if (num < limitNumber) {
+    initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: 0, isBlocked: false });
+  }
+  if (num == limitNumber) {
+    initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: Date.now(), isBlocked: true });
+  }
+}
+
+// handle unauthorised calls. Once limit is reached, no calls for creation of new unleash client will be issued to server.
+function handleUnauthorisedCalls(extensionName: string): void {
+  const isPending = initializeAttemptMap.get(extensionName)?.isBlocked;
+
+  if (isPending) {
+    //get time from map
+    const lastAttemptTime = initializeAttemptMap.get(extensionName)?.timeAttempt || Date.now();
+    // get time difference from now
+    const timeDifference = Math.abs((Date.now() - lastAttemptTime) / (1000 * 60));
+    if (timeDifference < 0.2) {
+      throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached. Attempts will be blocked for the next hour.`);
+    }
+    initializeAttemptMap.set(extensionName, { numAttempt: 0, timeAttempt: Date.now(), isBlocked: false });
+  }
 }
 
 async function createNewUnleashClient(extensionName: string, unleashClientMap: Map<string, Unleash>): Promise<Unleash> {
@@ -39,7 +61,6 @@ async function createNewUnleashClient(extensionName: string, unleashClientMap: M
 
     //add the client to the map
     unleashClientMap.set(extensionName, client);
-    initializeAttemptMap.set(extensionName, { numAttempt: 0, timeAttempt: new Date() });
 
     return client;
   } catch (e) {
@@ -55,12 +76,7 @@ export async function getUnleashClientFromMap(extensionName: string, unleashClie
     return unleashClient;
   }
 
-  // handle unauthorised calls. Once limit is reached, no calls for creation of new unleash client will be issued to server.
-  const attemptNumber = initializeAttemptMap.get(extensionName)?.numAttempt;
-
-  if (attemptNumber && attemptNumber >= limitNumber) {
-    throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached.`);
-  }
+  handleUnauthorisedCalls(extensionName);
 
   // The client does NOT exist in the map -> create a new client
   return createNewUnleashClient(extensionName, unleashClientMap);
