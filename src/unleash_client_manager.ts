@@ -9,7 +9,7 @@ import { registerStrategies } from "./strategy/appStudioStrategies";
 // map value = Unleash client
 const unleashClientMap = new Map<string, Unleash>();
 
-interface InitializeAttempt {
+export interface InitializeAttempt {
   numAttempt: number;
   timeAttempt: number;
   isBlocked: boolean;
@@ -32,41 +32,40 @@ function handleUnauthorisedError(extensionName: string): void {
 }
 
 // handle unauthorised calls. Once limit is reached, no calls for creation of new unleash client will be issued to server.
-function handleUnauthorisedCalls(extensionName: string): void {
+export function handleUnauthorisedCalls(extensionName: string, initializeAttemptMap: Map<string, InitializeAttempt>): void {
   const isPending = initializeAttemptMap.get(extensionName)?.isBlocked;
 
   if (isPending) {
     //get time from map
     const lastAttemptTime = initializeAttemptMap.get(extensionName)?.timeAttempt || Date.now();
-    // get time difference from now
+    // get time difference from now in min
     const timeDifference = Math.abs((Date.now() - lastAttemptTime) / (1000 * 60));
-    if (timeDifference < 0.2) {
-      throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached. Attempts will be blocked for the next hour.`);
+    const blockPeriod = Math.floor(Math.random() * 3) + 9;
+    if (timeDifference < blockPeriod) {
+      throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached. Attempts will be blocked for the next 10 min.`);
     }
     initializeAttemptMap.set(extensionName, { numAttempt: 0, timeAttempt: Date.now(), isBlocked: false });
   }
 }
 
 async function createNewUnleashClient(extensionName: string, unleashClientMap: Map<string, Unleash>): Promise<Unleash> {
-  try {
-    //get server env arguments
-    const serverArgs = ServerArgs.getServerArgs();
+  //get server env arguments
+  const serverArgs = ServerArgs.getServerArgs();
 
-    //init client
-    const appStudioMultiStrategy = new AppStudioMultiStrategy();
+  //init client
+  const appStudioMultiStrategy = new AppStudioMultiStrategy();
 
-    const client = await initializeUnleashClient(extensionName, serverArgs, [appStudioMultiStrategy]);
-
-    registerStrategies(appStudioMultiStrategy);
-
-    //add the client to the map
-    unleashClientMap.set(extensionName, client);
-
-    return client;
-  } catch (e) {
+  const client = await initializeUnleashClient(extensionName, serverArgs, [appStudioMultiStrategy]).catch((err) => {
     handleUnauthorisedError(extensionName);
-    throw e;
-  }
+    throw err;
+  });
+
+  registerStrategies(appStudioMultiStrategy);
+
+  //add the client to the map
+  unleashClientMap.set(extensionName, client);
+
+  return client;
 }
 
 export async function getUnleashClientFromMap(extensionName: string, unleashClientMap: Map<string, Unleash>): Promise<Unleash> {
@@ -76,7 +75,7 @@ export async function getUnleashClientFromMap(extensionName: string, unleashClie
     return unleashClient;
   }
 
-  handleUnauthorisedCalls(extensionName);
+  handleUnauthorisedCalls(extensionName, initializeAttemptMap);
 
   // The client does NOT exist in the map -> create a new client
   return createNewUnleashClient(extensionName, unleashClientMap);

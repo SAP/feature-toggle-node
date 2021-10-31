@@ -91,4 +91,22 @@ describe("Test unleash client manager", () => {
 
     expect(registerSpy.callCount).to.equal(1);
   });
+
+  it("Test error is thrown when calls status is blocked and time difference between calls is less then 10 min", async () => {
+    const initializeAttemptMap = new Map<string, clientManager.InitializeAttempt>();
+    initializeAttemptMap.set("aa", { numAttempt: 2, timeAttempt: 0, isBlocked: true });
+    try {
+      clientManager.handleUnauthorisedCalls("aa", initializeAttemptMap);
+    } catch (err) {
+      expect(err.message).to.contain("Attempts will be blocked for the next 10 min.");
+    }
+  });
+
+  it("Test error is not thrown when calls status is blocked and time difference between calls is more then 10 min", async () => {
+    const initializeAttemptMap = new Map<string, clientManager.InitializeAttempt>();
+    const lastAttemptTime = Date.now() - 20 * 60 * 1000;
+    initializeAttemptMap.set("aa", { numAttempt: 2, timeAttempt: lastAttemptTime, isBlocked: true });
+    clientManager.handleUnauthorisedCalls("aa", initializeAttemptMap);
+    expect(initializeAttemptMap.get("aa")?.numAttempt).to.equal(0);
+  });
 });
