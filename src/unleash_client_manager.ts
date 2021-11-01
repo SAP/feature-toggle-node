@@ -31,20 +31,21 @@ function handleUnauthorisedError(extensionName: string): void {
   }
 }
 
-// handle unauthorised calls. Once limit is reached, no calls for creation of new unleash client will be issued to server.
+// handle unauthorised calls. Block calls for client initialization while in block time period.
 export function handleUnauthorisedCalls(extensionName: string, initializeAttemptMap: Map<string, InitializeAttempt>): void {
-  const isPending = initializeAttemptMap.get(extensionName)?.isBlocked;
-
-  if (isPending) {
+  const initializationInfo = initializeAttemptMap.get(extensionName);
+  // check that client initialization will be not called while in block period
+  if (initializationInfo && initializationInfo.isBlocked) {
     //get time from map
-    const lastAttemptTime = initializeAttemptMap.get(extensionName)?.timeAttempt || Date.now();
+    const lastAttemptTime = initializationInfo.timeAttempt;
     // get time difference from now in min
     const timeDifference = Math.abs((Date.now() - lastAttemptTime) / (1000 * 60));
     const blockPeriod = Math.floor(Math.random() * 3) + 9;
     if (timeDifference < blockPeriod) {
       throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached. Attempts will be blocked for the next 10 min.`);
     }
-    initializeAttemptMap.set(extensionName, { numAttempt: 0, timeAttempt: Date.now(), isBlocked: false });
+    // block period is over
+    initializeAttemptMap.set(extensionName, { numAttempt: 0, timeAttempt: 0, isBlocked: false });
   }
 }
 
