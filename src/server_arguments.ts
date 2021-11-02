@@ -3,7 +3,8 @@ import { getEnv } from "./utils";
 
 export const ENV_FT_SERVER_ENDPOINT_NAME = "FT_SERVER_ENDPOINT";
 export const ENV_FT_TOKEN = "FT_TOKEN";
-const REFRESH_INTERVAL = 60000 * 30; //30 minutes
+const MILLISECONDS_IN_MINUTE = 60000;
+const REFRESH_INTERVAL = MILLISECONDS_IN_MINUTE * 30; //30 minutes
 
 export interface ServerArgs {
   ftServerEndPoint: string;
