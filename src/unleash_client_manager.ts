@@ -30,7 +30,7 @@ function handleUnauthorisedError(extensionName: string): void {
 // block calls for client initialization while in block time period.
 export function handleUnauthorisedCalls(extensionName: string, initializeAttemptMap: Map<string, InitializeAttempt>): void {
   const initializationInfo = initializeAttemptMap.get(extensionName);
-  if (initializationInfo && initializationInfo.isBlocked) {
+  if (initializationInfo?.isBlocked) {
     const lastAttemptTime = initializationInfo.timeAttempt;
     const timeDifference = Math.abs((Date.now() - lastAttemptTime) / (1000 * 60));
     const blockPeriod = Math.floor(Math.random() * 3) + 9; //10 min (+-1min)
