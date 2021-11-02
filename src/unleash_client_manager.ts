@@ -16,31 +16,24 @@ export interface InitializeAttempt {
 }
 
 // map key = extensionName
-// map value = number of attempts to establish unleash client
+// map value = info regarding attempts to establish unleash client
 const initializeAttemptMap = new Map<string, InitializeAttempt>();
 const limitNumber = 2;
 
 function handleUnauthorisedError(extensionName: string): void {
   let num = initializeAttemptMap.get(extensionName)?.numAttempt;
   num = (num || 0) + 1;
-  if (num < limitNumber) {
-    initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: 0, isBlocked: false });
-  }
-  if (num == limitNumber) {
-    initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: Date.now(), isBlocked: true });
-  }
+  const isInitBlocked = num == limitNumber;
+  initializeAttemptMap.set(extensionName, { numAttempt: num, timeAttempt: Date.now(), isBlocked: isInitBlocked });
 }
 
-// handle unauthorised calls. Block calls for client initialization while in block time period.
+// block calls for client initialization while in block time period.
 export function handleUnauthorisedCalls(extensionName: string, initializeAttemptMap: Map<string, InitializeAttempt>): void {
   const initializationInfo = initializeAttemptMap.get(extensionName);
-  // check that client initialization will be not called while in block period
   if (initializationInfo && initializationInfo.isBlocked) {
-    //get time from map
     const lastAttemptTime = initializationInfo.timeAttempt;
-    // get time difference from now in min
     const timeDifference = Math.abs((Date.now() - lastAttemptTime) / (1000 * 60));
-    const blockPeriod = Math.floor(Math.random() * 3) + 9;
+    const blockPeriod = Math.floor(Math.random() * 3) + 9; //10 min (+-1min)
     if (timeDifference < blockPeriod) {
       throw new Error(`The limit of attempts to create unleash client for ${extensionName} has been reached. Attempts will be blocked for the next 10 min.`);
     }
