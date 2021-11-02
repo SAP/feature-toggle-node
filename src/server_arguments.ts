@@ -1,11 +1,9 @@
 import { log } from "./logger";
 import { getEnv } from "./utils";
-import parseDuration from "parse-duration";
 
 export const ENV_FT_SERVER_ENDPOINT_NAME = "FT_SERVER_ENDPOINT";
-export const ENV_REFRESH_INTERVAL_NAME = "FT_CLIENT_REFRESH_INTERVAL";
 export const ENV_FT_TOKEN = "FT_TOKEN";
-const DEFAULT_REFRESH_INTERVAL = 10000; //10 sec
+const REFRESH_INTERVAL = 60000 * 30; //30 minutes
 
 export interface ServerArgs {
   ftServerEndPoint: string;
@@ -13,26 +11,12 @@ export interface ServerArgs {
   ftServerToken: string | undefined;
 }
 
-// get featureToggle server url and client refresh interval from environment variables
+// get featureToggle server url from environment variables
 export function getServerArgs(): ServerArgs {
-  //get feature server endpoint from env variable
   let endpoint = getEnv(ENV_FT_SERVER_ENDPOINT_NAME, "Feature toggle server endpoint (FT_SERVER_ENDPOINT) was NOT found in the environment variables.");
   // add /api/ to url. handles url with trailing slash and without
   endpoint = endpoint.replace(/\/?$/, "/api/");
+  log(`client refresh interval is: ${REFRESH_INTERVAL}`);
 
-  //get refresh interval
-  const intervalEnv = process.env[ENV_REFRESH_INTERVAL_NAME];
-  let interval;
-  // do not parse undefined, empty...
-  if (intervalEnv) {
-    interval = parseDuration(intervalEnv);
-  }
-  // parse parseDuration result
-  if (!interval) {
-    interval = DEFAULT_REFRESH_INTERVAL;
-    log(`[ERROR] client refresh interval not set or in incorrect pattern, using the default interval: ${DEFAULT_REFRESH_INTERVAL}`);
-  }
-  log(`client refresh interval is: ${interval}`);
-
-  return { ftServerEndPoint: endpoint, ftServerInterval: interval, ftServerToken: process.env[ENV_FT_TOKEN] };
+  return { ftServerEndPoint: endpoint, ftServerInterval: REFRESH_INTERVAL, ftServerToken: process.env[ENV_FT_TOKEN] };
 }
