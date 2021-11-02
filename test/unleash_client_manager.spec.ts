@@ -91,4 +91,49 @@ describe("Test unleash client manager", () => {
 
     expect(registerSpy.callCount).to.equal(1);
   });
+
+  it("Block error is thrown when number of attempts to create new unleash client is more than 2", async () => {
+    // stub the unleash client
+    sinon.stub(unleashClient, "initialize").returns({} as unleashClient.Unleash);
+
+    await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap).catch((err) => err.message);
+    await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap).catch((err) => err.message);
+    const err3 = await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap).catch((err) => err.message);
+    expect(err3).to.contain("Attempts will be blocked for the next 10 min");
+  });
+
+  describe("Test handleUnauthorisedCalls - ", () => {
+    let initializeTestAttemptMap: Map<string, clientManager.InitializeAttempt>;
+    const testExtension = "test";
+
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    beforeEach(() => {
+      initializeTestAttemptMap = new Map<string, clientManager.InitializeAttempt>();
+    });
+
+    it("throws error when calls status is blocked and time difference between calls is less then 10 min", () => {
+      initializeTestAttemptMap.set(testExtension, { numAttempt: 2, timeAttempt: Date.now(), isBlocked: true });
+      try {
+        clientManager.handleUnauthorisedCalls(testExtension, initializeTestAttemptMap);
+      } catch (err) {
+        expect(err.message).to.contain("Attempts will be blocked for the next 10 min.");
+      }
+    });
+
+    it("doesnt throw error when calls status is blocked and block period is over", () => {
+      const lastAttemptTime = Date.now() - 20 * 60 * 1000;
+      initializeTestAttemptMap.set(testExtension, { numAttempt: 2, timeAttempt: lastAttemptTime, isBlocked: true });
+      clientManager.handleUnauthorisedCalls(testExtension, initializeTestAttemptMap);
+      expect(initializeTestAttemptMap.get(testExtension)?.numAttempt).to.equal(0);
+      expect(initializeTestAttemptMap.get(testExtension)?.isBlocked).to.be.false;
+    });
+
+    it("doesnt throw error when there is an attempt to initialize client for the first time", async () => {
+      clientManager.handleUnauthorisedCalls(testExtension, initializeTestAttemptMap);
+      expect(initializeTestAttemptMap.get(testExtension)?.numAttempt).to.be.undefined;
+    });
+  });
 });
