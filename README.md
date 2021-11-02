@@ -77,7 +77,7 @@ import { isFeatureEnabled } from "@sap-devx/feature-toggle-node";
 ```
 
 ## How to obtain support
-Open an issue within this GitHub repository.test
+Open an issue within this GitHub repository.
 
 ## Licensing
 
