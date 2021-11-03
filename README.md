@@ -46,7 +46,6 @@ To run the feature-toggle-node **locally**, you need to provide the following en
 - `LANDSCAPE_ENVIRONMENT` - (mandatory)
 - `LANDSCAPE_NAME` - (mandatory)
 - `FT_TOKEN` - Value of the feature toggle server API token (optional)
-- `FT_CLIENT_REFRESH_INTERVAL` - Feature toggle client refresh interval (optional, default value: 10s)
 - `SHOW_LOG` - If true, displays console logs (optional)
 
 Environment variables example:
@@ -54,7 +53,6 @@ Environment variables example:
 ```
 "FT_SERVER_ENDPOINT": "http://unleash.herokuapp.com",
 "USER_NAME": "user@hotmail.com",
-"FT_CLIENT_REFRESH_INTERVAL": "6s",
 "TENANT_ID" : "b5c05535-9495-4050-9d68-4356d0d34136",
 "TENANT_NAME": "cfsubaccount" // subaccount,
 "WORKSPACE_ID": "workspaces-ws-x66m6",
