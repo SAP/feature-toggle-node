@@ -5,7 +5,7 @@ import { describe, afterEach, it } from "mocha";
 import * as ServerUtil from "../src/server_arguments";
 
 describe("Server arguments tests", () => {
-  const REFRESH_INTERVAL = 60000 * 30;
+  const REFRESH_INTERVAL = 60000 * 15;
   afterEach(() => {
     sinon.restore();
   });
