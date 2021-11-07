@@ -1,3 +1,15 @@
+<a name="1.0.11"></a>
+
+# 1.0.9 (2021-07-28)
+
+### Features
+
+- Change cache interval 
+- Prevent new client initialization after two unauthorized attempts  
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.9"></a>
 
 # 1.0.9 (2021-07-28)
