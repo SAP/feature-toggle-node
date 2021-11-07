@@ -33,9 +33,9 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
   const options: UnleashConfig = {
     appName: extensionName,
     refreshInterval: serverArgs.ftServerInterval,
+    metricsInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
-    disableMetrics: true,
   };
 
   if (serverArgs.ftServerToken) {
