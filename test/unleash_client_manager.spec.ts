@@ -75,12 +75,7 @@ describe("Test unleash client manager", () => {
 
   it("Test initializeUnleashClient - to throw error when client creation promise was rejected", async () => {
     // stub the unleash client
-    const emptyClient = {
-      destroy: () => {
-        return;
-      },
-    };
-    sinon.stub(unleashClient, "initialize").returns(emptyClient as unleashClient.Unleash);
+    sinon.stub(unleashClient, "initialize").returns({} as unleashClient.Unleash);
     const err = await clientManager.getUnleashClientFromMap(extensionNameA, unleashClientMap).catch((err) => err.message);
     expect(err).to.equal("Failed to create Unleash client for extension aaa. Error message: TypeError: client.on is not a function");
   });
