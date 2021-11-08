@@ -33,7 +33,6 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
   const options: UnleashConfig = {
     appName: extensionName,
     refreshInterval: serverArgs.ftServerInterval,
-    metricsInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
   };
@@ -48,7 +47,6 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
   const allPromise = Promise.all([readyPromise, registeredPromise]);
   const [err] = await to(allPromise);
   if (err) {
-    unleashClient.destroy();
     log(`[ERROR] FT is initialization failed for extension ${extensionName}. EndPoint: ${serverArgs.ftServerEndPoint}`);
     throw new Error(`Failed to create Unleash client for extension ${extensionName}. Error message: ${err}`);
   }
