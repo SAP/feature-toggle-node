@@ -1,6 +1,18 @@
+<a name="1.0.12"></a>
+
+# 1.0.12 (2021-11-08)
+
+### Features
+
+- Reverted metrics changes from 1.0.11 due to "unleash" issue
+
+### BREAKING CHANGES
+
+- None
+
 <a name="1.0.11"></a>
 
-# 1.0.11 (2021-11-07)
+# 1.0.11 (2021-11-07) (Deprecated)
 
 ### Features
 
