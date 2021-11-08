@@ -35,7 +35,6 @@ export async function initializeUnleashClient(extensionName: string, serverArgs:
     refreshInterval: serverArgs.ftServerInterval,
     url: serverArgs.ftServerEndPoint,
     strategies: customStrategies,
-    disableMetrics: true,
   };
 
   if (serverArgs.ftServerToken) {
