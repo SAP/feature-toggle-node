@@ -106,4 +106,27 @@ describe("isFeatureEnabled", () => {
     const isEnabled = await API.isFeatureEnabled(extensionName, featureToggleName);
     expect(isEnabled).to.be.false;
   });
+
+  it("gets feature toggles list from cache - return false", async () => {
+    const extensionName = "ext";
+    const featureToggleName = "ftName";
+    const features: API.Features = {
+      features: [
+        {
+          name: "ext.ftName",
+          description: "enabled",
+          strategies: false,
+          disabled: false,
+        } as API.Toggle,
+      ],
+    };
+
+    sinon.stub(Request, "requestFeatureToggles").resolves(undefined);
+    sinon.stub(Strategies, "isToggleEnabled").returns(true);
+    sinon.stub(Cache, "getFeatureToggles").returns(features);
+    sinon.stub(Cache, "getToggleByKey").returns(undefined);
+    sinon.stub(Cache, "setTogglesByKey").returns();
+    const isEnabled = await API.isFeatureEnabled(extensionName, featureToggleName);
+    expect(isEnabled).to.be.true;
+  });
 });
