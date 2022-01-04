@@ -10,3 +10,7 @@ export function getEnv(envName: string, errorMessage: string): string {
   log(`${envName} from env is: ${envValue}`);
   return envValue;
 }
+
+export function convertPluralNameToSingular(param: string): string {
+  return param.slice(0, param.length - 1);
+}

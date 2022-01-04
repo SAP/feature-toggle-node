@@ -1,35 +1,80 @@
-import { Context } from "unleash-client/lib/context";
-import * as clientManager from "./unleash_client_manager";
-import * as contextManager from "./context_manager";
 import { log } from "./logger";
-import { Unleash } from "unleash-client";
+import { requestFeatureToggles } from "./request";
 
-export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
-  log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
+import { isToggleEnabled } from "./strategy_matching";
+import { Cache } from "./cache";
 
-  const ftName = `${extensionName}.${featureToggleName}`;
+export interface Parameters {
+  environments: string[]; // apps
+  infrastructures: string[]; //iaass
+  landscapes: string[]; // regions
+  subaccounts: string[];
+  users: string[];
+  wss: string[];
+  tenantids: string[];
+}
+
+export interface Features {
+  features: Toggle[];
+}
+
+export interface Toggle extends Parameters {
+  name: string;
+  description: string;
+  disabled: boolean;
+  strategies: boolean;
+}
+
+function validateFeatureToggleName(extensionName: string, toggleName: string): void {
+  if (!extensionName || !toggleName) {
+    const errStr = !extensionName ? "extension " : "";
+    throw new Error(`Feature toggle ${errStr}name can not be empty, null or undefined`);
+  }
+}
+
+async function getFeatureToggles() {
+  let toggles: Features = Cache.getFeatureToggles() as Features;
+
+  if (!toggles) {
+    toggles = await requestFeatureToggles();
+  }
+  return toggles;
+}
+
+function findToggleByName(toggles: Features, ftName: string): Toggle | undefined {
+  return toggles.features.find((toggle) => toggle.name == ftName);
+}
+
+export async function isFeatureEnabled(extensionName: string, toggleName: string): Promise<boolean> {
+  log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${toggleName}" is enabled`);
+
+  const ftName = `${extensionName}.${toggleName}`;
 
   try {
-    if (!extensionName) {
-      throw new Error("Feature toggle extension name can not be empty, null or undefined");
+    validateFeatureToggleName(extensionName, toggleName);
+    const toggleFromCache = Cache.getToggleByKey(ftName);
+
+    if (toggleFromCache != undefined) {
+      return toggleFromCache;
     }
 
-    if (!featureToggleName) {
-      throw new Error("Feature toggle name can not be empty, null or undefined");
+    const toggles: Features = await getFeatureToggles();
+    if (toggles.features.length) {
+      Cache.setFeatureToggles(toggles);
+
+      const toggle: Toggle | undefined = findToggleByName(toggles, ftName);
+
+      if (toggle) {
+        const isEnabled = isToggleEnabled(toggle);
+        Cache.setTogglesByKey(toggle.name, isEnabled);
+        return isEnabled;
+      }
     }
 
-    //get unleash client
-    const client: Unleash = await clientManager.getUnleashClient(extensionName);
-
-    // get the context
-    const context: Context = contextManager.getContext(extensionName);
-
-    //check if the feature is enabled
-    //fallback value is false (3rd parameter)
-    return client.isEnabled(ftName, context, false);
+    return false;
   } catch (err) {
     const logErr = `[ERROR] Failed to determine if feature toggle ${ftName} is enabled. Returning feature DISABLED. Error message: ${err}`;
     log(logErr);
-    return false; // error creating an Unleash client -> return feature is disabled
+    return false;
   }
 }
