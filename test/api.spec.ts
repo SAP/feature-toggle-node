@@ -6,7 +6,6 @@ import * as logger from "../src/logger";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategy_matching";
 import { Cache } from "../src/cache";
-import { isToggleEnabled } from "../src/strategy_matching";
 
 describe("isFeatureEnabled", () => {
   afterEach(() => {
@@ -38,7 +37,6 @@ describe("isFeatureEnabled", () => {
   it("toggle name found in cache by key - return true", async () => {
     const extensionName = "ext";
     const featureToggleName = "ftName";
-    const features = { features: [] };
 
     sinon.stub(Cache, "getToggleByKey").returns(true);
 
@@ -46,7 +44,7 @@ describe("isFeatureEnabled", () => {
     expect(isEnabled).to.be.true;
   });
 
-  function stubDependencies(features: API.Features) {
+  function stubDependencies(features: API.Features): void {
     sinon.stub(Request, "requestFeatureToggles").resolves(features);
     sinon.stub(Strategies, "isToggleEnabled").returns(true);
     sinon.stub(Cache, "getFeatureToggles").returns(undefined);

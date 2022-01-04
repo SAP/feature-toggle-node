@@ -32,7 +32,7 @@ function validateFeatureToggleName(extensionName: string, toggleName: string): v
   }
 }
 
-async function getFeatureToggles() {
+async function getFeatureToggles(): Promise<Features> {
   let toggles: Features = Cache.getFeatureToggles() as Features;
 
   if (!toggles) {
