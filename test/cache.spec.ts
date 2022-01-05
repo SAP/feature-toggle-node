@@ -25,6 +25,6 @@ describe("Cache", () => {
     const features = { features: [] };
     Cache.setFeatureToggles(features);
 
-    expect(Cache.getFeatureToggles()).to.equal(features);
+    expect(Cache.getFeatureToggles()).to.deep.equal(features);
   });
 });
