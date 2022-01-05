@@ -26,6 +26,10 @@ export interface Toggle extends Parameters {
 const REFRESH_INTERVAL = 60 * 15; //15 minutes
 let timeIntervalId: NodeJS.Timeout;
 
+export function clearCacheRefreshInterval() {
+  clearInterval(timeIntervalId);
+}
+
 function refreshCacheByInterval(): void {
   timeIntervalId = setInterval(async () => {
     const toggles = await requestFeatureToggles();
