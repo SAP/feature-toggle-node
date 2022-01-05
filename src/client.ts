@@ -27,7 +27,7 @@ const REFRESH_INTERVAL = 60 * 15; //15 minutes
 let timeIntervalId: NodeJS.Timeout;
 
 // tests purpose
-export function clearCacheRefreshInterval() {
+export function clearCacheRefreshInterval(): void {
   clearInterval(timeIntervalId);
 }
 
