@@ -1,6 +1,6 @@
 import { ContextData, createContextEntity } from "./current_context";
 import { convertPluralNameToSingular } from "./utils";
-import { Toggle } from "./api";
+import { Toggle } from "./client";
 
 export interface IterateableContext extends ContextData {
   [key: string]: string;
@@ -16,7 +16,6 @@ enum ParametersNames {
   tenantids = "tenantids",
 }
 
-// TODO: Check infrastructure
 function isMatchStrategies(toggle: Toggle): boolean {
   const currentContext: IterateableContext = createContextEntity();
 
@@ -26,11 +25,11 @@ function isMatchStrategies(toggle: Toggle): boolean {
     const singularParamName = convertPluralNameToSingular(parameterName);
     const currentContextParamValue = currentContext[singularParamName];
 
-    if (parameterValue?.length && !parameterValue?.includes(currentContextParamValue)) {
-      return false;
+    if (parameterValue?.length && parameterValue?.includes(currentContextParamValue)) {
+      return true;
     }
   }
-  return true;
+  return false;
 }
 
 export function isToggleEnabled(toggle: Toggle): boolean {

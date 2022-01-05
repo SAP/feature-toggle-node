@@ -1,13 +1,20 @@
 import { log } from "./logger";
 import * as https from "http";
-import { Features } from "./api";
+import { Features } from "./client";
 
-const SERVER_ENDPOINT = "http://ft-manager.feature-toggle.svc.cluster.local/v1/features";
+const ENV_FTM_HOST = "FTM_HOST";
+const DEFAULT_SERVER_ENDPOINT = "http://ft-manager.feature-toggle.svc.cluster.local";
+const API_ENDPOINT = "/v1/features";
+
+function getEndpoint() {
+  const host = process.env[ENV_FTM_HOST] || DEFAULT_SERVER_ENDPOINT;
+  return host + API_ENDPOINT;
+}
 
 export function requestFeatureToggles(): Promise<Features> {
   return new Promise((resolve, reject) => {
     https
-      .get(SERVER_ENDPOINT, (res) => {
+      .get(getEndpoint(), (res) => {
         log("Get Toggles from server with Status Code: " + res.statusCode);
 
         const data: Uint8Array[] = [];
@@ -20,7 +27,7 @@ export function requestFeatureToggles(): Promise<Features> {
         });
       })
       .on("error", (e) => {
-        console.error(e);
+        log(e.message);
         reject(e);
       });
   });

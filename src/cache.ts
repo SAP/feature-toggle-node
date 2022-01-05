@@ -1,9 +1,14 @@
 import * as NodeCache from "node-cache";
-import { Features } from "./api";
+import { Features } from "./client";
 
-const REFRESH_INTERVAL = 60 * 15; //15 minutes
 const FEATURES_KEY = "features";
-const ftCache = new NodeCache({ stdTTL: REFRESH_INTERVAL });
+const ftCache = new NodeCache();
+
+/*
+ * Example of cache structure:
+ *   [features]: { features: [] }     - keep last response with all toggles
+ *   [toggleName]: boolean            - value of toggles by name that has been called in last ${REFRESH_INTERVAL} minutes
+ * */
 
 export class Cache {
   static getFeatureToggles(): Features | undefined {
@@ -20,5 +25,9 @@ export class Cache {
 
   static setTogglesByKey(key: string, value: boolean): void {
     ftCache.set(key, value);
+  }
+
+  static flushCache(): void {
+    ftCache.flushAll();
   }
 }

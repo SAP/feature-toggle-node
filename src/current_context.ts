@@ -6,6 +6,7 @@ const LANDSCAPE_NAME = "LANDSCAPE_NAME";
 const TENANT_ID = "TENANT_ID";
 const SUB_ACCOUNT = "TENANT_NAME";
 const WORKSPACE_ID = "WORKSPACE_ID";
+const LANDSCAPE_INFRASTRUCTURE = "LANDSCAPE_INFRASTRUCTURE";
 
 export type ContextData = {
   environment: string;
@@ -34,11 +35,13 @@ export function createContextEntity(): ContextData {
   const subaccount = getEnvWithNotFoundError(SUB_ACCOUNT);
   // get WORKSPACE_ID env
   const ws = getEnvWithNotFoundError(WORKSPACE_ID);
+  // get LANDSCAPE_INFRASTRUCTURE env
+  const infrastructure = getEnvWithNotFoundError(LANDSCAPE_INFRASTRUCTURE);
 
   // Create the context
   return {
     environment,
-    infrastructure: "",
+    infrastructure,
     landscape,
     subaccount,
     user,

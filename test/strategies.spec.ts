@@ -2,8 +2,8 @@ import { afterEach, describe, it } from "mocha";
 import * as sinon from "sinon";
 import * as CurrentContext from "../src/current_context";
 import { expect } from "chai";
-import { IterateableContext, isToggleEnabled } from "../src/strategy_matching";
-import { Toggle } from "../src/api";
+import { IterateableContext, isToggleEnabled } from "../src/strategies";
+import { Toggle } from "../src/client";
 import { ContextData } from "../lib/current_context";
 
 describe("isToggleEnabled", () => {
@@ -71,6 +71,7 @@ describe("isToggleEnabled", () => {
       strategies: true,
       disabled: false,
       environments: ["test", "test1"],
+      landscapes: ["landscapes"],
     } as Toggle;
 
     const contextParams = {
@@ -114,7 +115,7 @@ describe("isToggleEnabled", () => {
     expect(isEnabled).to.be.false;
   });
 
-  it("toggle enabled and has all correct strategies except tenantid return false", async () => {
+  it("toggle enabled and has one correct strategies except tenantid return false", async () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
@@ -129,19 +130,19 @@ describe("isToggleEnabled", () => {
     } as Toggle;
 
     const contextParams = {
-      environment: "test1",
+      environment: "",
       infrastructure: "",
-      landscape: "landscape1",
+      landscape: "",
       subaccount: "subaccount1",
-      user: "user1",
-      ws: "ws1",
+      user: "",
+      ws: "",
       tenantid: "wrongId",
     } as ContextData;
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
     const isEnabled = await isToggleEnabled(toggle);
-    expect(isEnabled).to.be.false;
+    expect(isEnabled).to.be.true;
   });
 
   it("toggle enabled and has all correct strategies return true", async () => {

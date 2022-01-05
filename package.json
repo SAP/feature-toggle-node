@@ -1,6 +1,6 @@
 {
   "name": "@sap-devx/feature-toggle-node",
-  "version": "1.0.12",
+  "version": "1.0.11",
   "description": "",
   "main": "lib/api.js",
   "types": "lib/api.js",
@@ -30,7 +30,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "await-to-js": "3.0.0",
-    "node-cache": "^5.1.2",
+    "node-cache": "5.1.2",
     "parse-duration": "0.4.4"
   },
   "devDependencies": {
@@ -79,7 +79,9 @@
     ],
     "exclude": [
       "src/example/example.ts",
-      "src/example/example_simple.ts"
+      "src/example/example_simple.ts",
+      "src/example/request.ts",
+      "src/example/utils.ts"
     ],
     "reporter": [
       "text",
