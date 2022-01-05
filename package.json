@@ -79,7 +79,9 @@
     ],
     "exclude": [
       "src/example/example.ts",
-      "src/example/example_simple.ts"
+      "src/example/example_simple.ts",
+      "src/request.ts",
+      "src/utils.ts"
     ],
     "reporter": [
       "text",
