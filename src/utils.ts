@@ -1,13 +1,27 @@
 import { log } from "./logger";
 
-export function getEnv(envName: string, errorMessage: string): string {
-  //get feature server endpoint from env variable
+function throwError(errorMessage: string): void {
+  throw new Error(`[ERROR] ${errorMessage}`);
+}
+
+export function getEnv(envName: string): string {
   let envValue = process.env[envName];
-  if (!envValue) {
-    throw new Error(`[ERROR] ${errorMessage}`);
+
+  if (envValue) {
+    envValue = envValue.trim().toLowerCase();
+    log(`${envName} from env is: ${envValue}`);
   }
-  envValue = envValue.trim().toLowerCase();
-  log(`${envName} from env is: ${envValue}`);
+
+  return envValue ?? "";
+}
+
+export function getEnvWithError(envName: string, errorMessage: string): string {
+  const envValue = getEnv(envName);
+
+  if (!envValue.length) {
+    throwError(errorMessage);
+  }
+
   return envValue;
 }
 

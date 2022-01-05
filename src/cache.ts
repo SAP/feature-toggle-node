@@ -10,24 +10,22 @@ const ftCache = new NodeCache();
  *   [toggleName]: boolean            - value of toggles by name that has been called in last ${REFRESH_INTERVAL} minutes
  * */
 
-export class Cache {
-  static getFeatureToggles(): Features | undefined {
-    return ftCache.get(FEATURES_KEY);
-  }
+export function getFeatureToggles(): Features | undefined {
+  return ftCache.get(FEATURES_KEY);
+}
 
-  static setFeatureToggles(toggles: Features): void {
-    ftCache.set(FEATURES_KEY, toggles);
-  }
+export function setFeatureToggles(toggles: Features): void {
+  ftCache.set(FEATURES_KEY, toggles);
+}
 
-  static getToggleByKey(key: string): boolean | undefined {
-    return ftCache.get(key);
-  }
+export function getToggleByKey(key: string): boolean | undefined {
+  return ftCache.get(key);
+}
 
-  static setTogglesByKey(key: string, value: boolean): void {
-    ftCache.set(key, value);
-  }
+export function setTogglesByKey(key: string, value: boolean): void {
+  ftCache.set(key, value);
+}
 
-  static flushCache(): void {
-    ftCache.flushAll();
-  }
+export function flushCache(): void {
+  ftCache.flushAll();
 }

@@ -115,7 +115,7 @@ describe("isToggleEnabled", () => {
     expect(isEnabled).to.be.false;
   });
 
-  it("toggle enabled and has one correct strategies except tenantid return false", async () => {
+  it("toggle enabled and has one correct strategies except tenantid return true", async () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",

@@ -3,6 +3,7 @@ import * as sinon from "sinon";
 import { describe, afterEach, it } from "mocha";
 import * as API from "../src/api";
 import * as logger from "../src/logger";
+import * as Client from "../src/client";
 
 describe("isFeatureEnabled", () => {
   afterEach(() => {
@@ -29,5 +30,12 @@ describe("isFeatureEnabled", () => {
   it("featureToggleName is empty - throw Error and return false", async () => {
     const errMessage = `[ERROR] Failed to determine if feature toggle bla. is enabled. Returning feature DISABLED. Error message: Error: Feature toggle name can not be empty, null or undefined`;
     await testFailure("bla", "", errMessage);
+  });
+
+  it("returns same value as findToggleAndReturnState return true", async () => {
+    sinon.stub(Client, "findToggleAndReturnState").resolves(true);
+
+    const isEnabled = await API.isFeatureEnabled("extensionName", "ftName");
+    expect(isEnabled).to.be.true;
   });
 });

@@ -16,6 +16,11 @@ enum ParametersNames {
   tenantids = "tenantids",
 }
 
+/*
+ * isMatchStrategies iterates over parameters in ParametersNames enum
+ * takes value by parameter name of toggle and parameter from currentContext
+ * return true if any of currentContext parameter presented in toggle
+ * */
 function isMatchStrategies(toggle: Toggle): boolean {
   const currentContext: IterateableContext = createContextEntity();
 

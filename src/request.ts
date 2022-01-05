@@ -6,7 +6,7 @@ const ENV_FTM_HOST = "FTM_HOST";
 const DEFAULT_SERVER_ENDPOINT = "http://ft-manager.feature-toggle.svc.cluster.local";
 const API_ENDPOINT = "/v1/features";
 
-function getEndpoint() {
+function getEndpoint(): string {
   const host = process.env[ENV_FTM_HOST] || DEFAULT_SERVER_ENDPOINT;
   return host + API_ENDPOINT;
 }

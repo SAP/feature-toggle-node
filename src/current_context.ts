@@ -1,4 +1,4 @@
-import { getEnv } from "./utils";
+import { getEnv, getEnvWithError } from "./utils";
 
 const USER_NAME = "USER_NAME";
 const LANDSCAPE_ENVIRONMENT = "LANDSCAPE_ENVIRONMENT";
@@ -19,7 +19,7 @@ export type ContextData = {
 };
 
 function getEnvWithNotFoundError(envVar: string): string {
-  return getEnv(envVar, `Feature toggle env ${envVar} was NOT found in the environment variables`);
+  return getEnvWithError(envVar, `Feature toggle env ${envVar} was NOT found in the environment variables`);
 }
 
 export function createContextEntity(): ContextData {
@@ -35,8 +35,8 @@ export function createContextEntity(): ContextData {
   const subaccount = getEnvWithNotFoundError(SUB_ACCOUNT);
   // get WORKSPACE_ID env
   const ws = getEnvWithNotFoundError(WORKSPACE_ID);
-  // get LANDSCAPE_INFRASTRUCTURE env
-  const infrastructure = getEnvWithNotFoundError(LANDSCAPE_INFRASTRUCTURE);
+  // get LANDSCAPE_INFRASTRUCTURE env or empty string if not found
+  const infrastructure = getEnv(LANDSCAPE_INFRASTRUCTURE);
 
   // Create the context
   return {

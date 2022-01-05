@@ -1,4 +1,4 @@
-import { Cache } from "./cache";
+import * as Cache from "./cache";
 import { requestFeatureToggles } from "./request";
 import { isToggleEnabled } from "./strategies";
 
@@ -26,7 +26,7 @@ export interface Toggle extends Parameters {
 const REFRESH_INTERVAL = 60 * 15; //15 minutes
 let timeIntervalId: NodeJS.Timeout;
 
-function beginAutomaticCacheUpdate() {
+function refreshCacheByInterval(): void {
   timeIntervalId = setInterval(async () => {
     const toggles = await requestFeatureToggles();
 
@@ -50,9 +50,9 @@ function findToggleByName(toggles: Features, ftName: string): Toggle | undefined
   return toggles.features.find((toggle) => toggle.name == ftName);
 }
 
-export async function findToggleAndReturnState(ftName: string) {
+export async function findToggleAndReturnState(ftName: string): Promise<boolean> {
   if (!timeIntervalId) {
-    beginAutomaticCacheUpdate();
+    refreshCacheByInterval();
   }
 
   const toggleFromCache = Cache.getToggleByKey(ftName);
