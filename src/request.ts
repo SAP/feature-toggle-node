@@ -27,7 +27,6 @@ export function requestFeatureToggles(): Promise<Features> {
         });
       })
       .on("error", (e) => {
-        log(e.message);
         reject(e);
       });
   });
