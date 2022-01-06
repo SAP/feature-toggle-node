@@ -5,11 +5,17 @@ import * as Cache from "../src/cache";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
-import { clearCacheRefreshInterval } from "../src/client";
+import { refreshCacheByInterval, updateRefreshInterval } from "../src/client";
+import { requestFeatureToggles } from "../src/request";
+import * as logger from "../src/logger";
 
 describe("findToggleAndReturnState", () => {
-  afterEach(() => {
-    sinon.restore();
+  beforeEach(function () {
+    this.clock = sinon.useFakeTimers();
+  });
+
+  afterEach(function () {
+    this.clock = sinon.restore();
   });
 
   function stubDependencies(features: Client.Features): void {
@@ -28,7 +34,6 @@ describe("findToggleAndReturnState", () => {
     sinon.stub(Request, "requestFeatureToggles").resolves(undefined);
 
     const isEnabled = await Client.findToggleAndReturnState(ftName);
-    clearCacheRefreshInterval();
     expect(isEnabled).to.be.true;
   });
 
@@ -47,7 +52,6 @@ describe("findToggleAndReturnState", () => {
 
     stubDependencies(features);
     const isEnabled = await Client.findToggleAndReturnState(ftName);
-    clearCacheRefreshInterval();
     expect(isEnabled).to.be.false;
   });
 
@@ -66,7 +70,6 @@ describe("findToggleAndReturnState", () => {
 
     stubDependencies(features);
     const isEnabled = await Client.findToggleAndReturnState(ftName);
-    clearCacheRefreshInterval();
     expect(isEnabled).to.be.true;
   });
 
@@ -79,7 +82,6 @@ describe("findToggleAndReturnState", () => {
     sinon.stub(Request, "requestFeatureToggles").resolves(features);
     sinon.stub(Strategies, "isToggleEnabled").returns(true);
     const isEnabled = await Client.findToggleAndReturnState(ftName);
-    clearCacheRefreshInterval();
     expect(isEnabled).to.be.false;
   });
 
@@ -100,7 +102,28 @@ describe("findToggleAndReturnState", () => {
     sinon.stub(Strategies, "isToggleEnabled").returns(true);
     sinon.stub(Cache, "getFeatureToggles").returns(features);
     const isEnabled = await Client.findToggleAndReturnState(ftName);
-    clearCacheRefreshInterval();
     expect(isEnabled).to.be.true;
+  });
+});
+
+describe("refreshCacheByInterval", () => {
+  beforeEach(function () {
+    this.clock = sinon.useFakeTimers();
+  });
+
+  afterEach(function () {
+    this.clock = sinon.restore();
+  });
+
+  it("checked that requestFeatureToggles called twice in last 20 seconds", function () {
+    updateRefreshInterval(10);
+    Client.refreshCacheByInterval();
+
+    const features: Client.Features = {
+      features: [],
+    };
+    const spy = sinon.stub(Request, "requestFeatureToggles").resolves(features);
+    this.clock.tick(20);
+    expect(spy.callCount).to.be.equal(2);
   });
 });

@@ -1,6 +1,7 @@
 import * as Cache from "./cache";
 import { requestFeatureToggles } from "./request";
 import { isToggleEnabled } from "./strategies";
+import { log } from "./logger";
 
 export interface Parameters {
   environments: string[]; // apps
@@ -23,30 +24,32 @@ export interface Toggle extends Parameters {
   strategies: boolean;
 }
 
-const REFRESH_INTERVAL = 60 * 15; //15 minutes
+let REFRESH_INTERVAL = 60 * 1000 * 15; // 15 minutes
 let timeIntervalId: NodeJS.Timeout;
 
 // tests purpose
-export function clearCacheRefreshInterval(): void {
-  clearInterval(timeIntervalId);
+export function updateRefreshInterval(interval: number): void {
+  REFRESH_INTERVAL = interval;
 }
 
-function refreshCacheByInterval(): void {
+export function refreshCacheByInterval(): void {
   timeIntervalId = setInterval(async () => {
     const toggles = await requestFeatureToggles();
 
     if (toggles?.features !== undefined) {
       Cache.flushCache();
       Cache.setFeatureToggles(toggles);
+      log("Feature toggle cache updated");
     }
   }, REFRESH_INTERVAL);
 }
 
 async function getFeatureToggles(): Promise<Features> {
-  let toggles: Features = Cache.getFeatureToggles() as Features;
+  let toggles: Features | undefined = Cache.getFeatureToggles();
 
   if (!toggles) {
     toggles = await requestFeatureToggles();
+    Cache.setFeatureToggles(toggles);
   }
   return toggles;
 }
