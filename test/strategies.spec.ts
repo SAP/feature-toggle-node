@@ -2,7 +2,7 @@ import { afterEach, describe, it } from "mocha";
 import * as sinon from "sinon";
 import * as CurrentContext from "../src/current_context";
 import { expect } from "chai";
-import { IterateableContext, isToggleEnabled } from "../src/strategies";
+import { IterateableContext, isToggleEnabled, isMatchStrategies } from "../src/strategies";
 import { Toggle } from "../src/client";
 import { ContextData } from "../src/current_context";
 
@@ -11,7 +11,7 @@ describe("isToggleEnabled", () => {
     sinon.restore();
   });
 
-  it("toggle enabled and has no strategies return true", async () => {
+  it("toggle enabled and has no strategies return true", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
@@ -21,11 +21,11 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns({} as IterateableContext);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.true;
   });
 
-  it("toggle disabled and has no strategies return false", async () => {
+  it("toggle disabled and has no strategies return false", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
@@ -35,11 +35,11 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns({} as IterateableContext);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.false;
   });
 
-  it("toggle disabled and has strategies return false", async () => {
+  it("toggle disabled and has strategies return false", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
@@ -60,7 +60,7 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.false;
   });
 
@@ -86,11 +86,11 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.true;
   });
 
-  it("toggle enabled and has no correct environment strategy return false", async () => {
+  it("toggle enabled and has no correct environment strategy return false", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
@@ -111,7 +111,7 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.false;
   });
 
@@ -141,7 +141,7 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.true;
   });
 
@@ -171,15 +171,21 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isToggleEnabled(toggle);
     expect(isEnabled).to.be.true;
+  });
+});
+
+describe("isMatchStrategies", () => {
+  afterEach(() => {
+    sinon.restore();
   });
 
   it("toggle enabled and has empty null strategy return false", async () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
-      strategies: true,
+      strategies: false,
       disabled: false,
       environments: null as unknown,
       landscapes: null as unknown,
@@ -197,7 +203,7 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isMatchStrategies(toggle);
     expect(isEnabled).to.be.false;
   });
 
@@ -205,7 +211,7 @@ describe("isToggleEnabled", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
-      strategies: true,
+      strategies: false,
       disabled: false,
     } as Toggle;
 
@@ -221,7 +227,7 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns(contextParams as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isMatchStrategies(toggle);
     expect(isEnabled).to.be.false;
   });
 
@@ -229,7 +235,7 @@ describe("isToggleEnabled", () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
-      strategies: true,
+      strategies: false,
       disabled: false,
     } as Toggle;
 
@@ -237,15 +243,15 @@ describe("isToggleEnabled", () => {
 
     sinon.stub(CurrentContext, "createContextEntity").returns((contextParams as unknown) as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isMatchStrategies(toggle);
     expect(isEnabled).to.be.false;
   });
 
-  it(" environment of currentContext is null return false", async () => {
+  it("environment of currentContext is null return false", async () => {
     const toggle = {
       name: "ext.ftName",
       description: "enabled",
-      strategies: true,
+      strategies: false,
       disabled: false,
       environments: ["test"],
     } as Toggle;
@@ -255,7 +261,7 @@ describe("isToggleEnabled", () => {
     } as ContextData;
     sinon.stub(CurrentContext, "createContextEntity").returns((contextParams as unknown) as ContextData);
 
-    const isEnabled = await isToggleEnabled(toggle);
+    const isEnabled = isMatchStrategies(toggle);
     expect(isEnabled).to.be.false;
   });
 });
