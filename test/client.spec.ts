@@ -125,3 +125,44 @@ describe("refreshCacheByInterval", () => {
     expect(spy.callCount).to.be.equal(2);
   });
 });
+
+describe("flushCacheAndSaveNew", () => {
+  afterEach(function () {
+    sinon.restore();
+  });
+
+  it("not empty feature toggles call flushCache", function () {
+    const features: Client.Features = {
+      features: [{} as Client.Toggle],
+    };
+    const FlushSpy = sinon.stub(Cache, "flushCache").returns();
+    const SetSpy = sinon.stub(Cache, "setFeatureToggles").returns();
+    Client.flushCacheAndSaveNew(features);
+
+    expect(FlushSpy.callCount).to.be.equal(1);
+    expect(SetSpy.callCount).to.be.equal(1);
+  });
+
+  it("empty feature toggles list not call flushCache and setFeatures", function () {
+    const features: Client.Features = {
+      features: [],
+    };
+    const FlushSpy = sinon.stub(Cache, "flushCache").returns();
+    const SetSpy = sinon.stub(Cache, "setFeatureToggles").returns();
+    Client.flushCacheAndSaveNew(features);
+
+    expect(FlushSpy.callCount).to.be.equal(0);
+    expect(SetSpy.callCount).to.be.equal(0);
+  });
+
+  it("empty feature toggles object not call flushCache and setFeatures", function () {
+    const features: Client.Features = {} as Client.Features;
+
+    const FlushSpy = sinon.stub(Cache, "flushCache");
+    const SetSpy = sinon.stub(Cache, "setFeatureToggles");
+    Client.flushCacheAndSaveNew(features);
+
+    expect(FlushSpy.callCount).to.be.equal(0);
+    expect(SetSpy.callCount).to.be.equal(0);
+  });
+});

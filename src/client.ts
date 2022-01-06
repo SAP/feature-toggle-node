@@ -32,15 +32,18 @@ export function updateRefreshInterval(interval: number): void {
   REFRESH_INTERVAL = interval;
 }
 
+export function flushCacheAndSaveNew(toggles: Features): void {
+  if (toggles?.features?.length) {
+    Cache.flushCache();
+    Cache.setFeatureToggles(toggles);
+    log("Feature toggle cache updated");
+  }
+}
+
 export function refreshCacheByInterval(): void {
   timeIntervalId = setInterval(async () => {
     const toggles = await requestFeatureToggles();
-
-    if (toggles?.features !== undefined) {
-      Cache.flushCache();
-      Cache.setFeatureToggles(toggles);
-      log("Feature toggle cache updated");
-    }
+    flushCacheAndSaveNew(toggles);
   }, REFRESH_INTERVAL);
 }
 
