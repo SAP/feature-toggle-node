@@ -5,6 +5,7 @@ import * as Cache from "../src/cache";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
+import * as Logger from "../src/logger";
 import { updateRefreshInterval } from "../src/client";
 
 describe("findToggleAndReturnState", () => {
@@ -126,43 +127,75 @@ describe("refreshCacheByInterval", () => {
   });
 });
 
-describe("flushCacheAndSaveNew", () => {
-  afterEach(function () {
+async function stubFlushAndSet(features: Client.Features): Promise<void> {
+  sinon.stub(Request, "requestFeatureToggles").resolves(features);
+
+  const flushSpy = sinon.stub(Cache, "flushCache");
+  const setSpy = sinon.stub(Cache, "setFeatureToggles");
+  await Client.requestTogglesAndSaveNewCache();
+
+  expect(flushSpy.callCount).to.be.equal(0);
+  expect(setSpy.callCount).to.be.equal(0);
+}
+
+describe("requestTogglesAndSaveNewCache", () => {
+  afterEach(() => {
     sinon.restore();
   });
 
-  it("not empty feature toggles call flushCache", function () {
-    const features: Client.Features = {
-      features: [{} as Client.Toggle],
-    };
-    const FlushSpy = sinon.stub(Cache, "flushCache").returns();
-    const SetSpy = sinon.stub(Cache, "setFeatureToggles").returns();
-    Client.flushCacheAndSaveNew(features);
-
-    expect(FlushSpy.callCount).to.be.equal(1);
-    expect(SetSpy.callCount).to.be.equal(1);
-  });
-
-  it("empty feature toggles list not call flushCache and setFeatures", function () {
+  it("empty feature toggles list not call flushCache and setFeatures", async () => {
     const features: Client.Features = {
       features: [],
     };
-    const FlushSpy = sinon.stub(Cache, "flushCache").returns();
-    const SetSpy = sinon.stub(Cache, "setFeatureToggles").returns();
-    Client.flushCacheAndSaveNew(features);
-
-    expect(FlushSpy.callCount).to.be.equal(0);
-    expect(SetSpy.callCount).to.be.equal(0);
+    await stubFlushAndSet(features);
   });
 
-  it("empty feature toggles object not call flushCache and setFeatures", function () {
+  it("empty feature toggles object not call flushCache and setFeatures", async () => {
     const features: Client.Features = {} as Client.Features;
+    await stubFlushAndSet(features);
+  });
 
-    const FlushSpy = sinon.stub(Cache, "flushCache");
-    const SetSpy = sinon.stub(Cache, "setFeatureToggles");
-    Client.flushCacheAndSaveNew(features);
+  it("feature toggles calls flushCache and setFeatures", async () => {
+    const features: Client.Features = {
+      features: [{} as Client.Toggle],
+    };
 
-    expect(FlushSpy.callCount).to.be.equal(0);
-    expect(SetSpy.callCount).to.be.equal(0);
+    sinon.stub(Request, "requestFeatureToggles").resolves(features);
+
+    const flushSpy = sinon.stub(Cache, "flushCache");
+    const setSpy = sinon.stub(Cache, "setFeatureToggles");
+    await Client.requestTogglesAndSaveNewCache();
+
+    expect(flushSpy.callCount).to.be.equal(1);
+    expect(setSpy.callCount).to.be.equal(1);
+  });
+
+  it("undefined features not call flush and set Cache", async () => {
+    sinon.stub(Request, "requestFeatureToggles").callsFake(() => {
+      return new Promise((resolve) => {
+        resolve((null as unknown) as Client.Features);
+      });
+    });
+
+    const flushSpy = sinon.stub(Cache, "flushCache");
+    const setSpy = sinon.stub(Cache, "setFeatureToggles");
+    await Client.requestTogglesAndSaveNewCache();
+
+    expect(flushSpy.callCount).to.be.equal(0);
+    expect(setSpy.callCount).to.be.equal(0);
+  });
+
+  it("reject error caught and logged", async () => {
+    sinon.stub(Request, "requestFeatureToggles").rejects(new Error("error"));
+    const flushSpy = sinon.stub(Cache, "flushCache");
+    const setSpy = sinon.stub(Cache, "setFeatureToggles");
+    const loggerSpy = sinon.stub(Logger, "log");
+
+    await Client.requestTogglesAndSaveNewCache();
+
+    expect(flushSpy.callCount).to.be.equal(0);
+    expect(setSpy.callCount).to.be.equal(0);
+    expect(loggerSpy.callCount).to.equal(1);
+    expect(loggerSpy.args[0][0]).to.equal("error");
   });
 });

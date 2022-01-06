@@ -23,17 +23,19 @@ enum ParametersNames {
  * */
 function isMatchStrategies(toggle: Toggle): boolean {
   const currentContext: IterateableContext = createContextEntity();
+  if (currentContext) {
+    for (const parameterName of Object.values(ParametersNames)) {
+      const parameterValue = toggle[parameterName];
 
-  for (const parameterName of Object.values(ParametersNames)) {
-    const parameterValue = toggle[parameterName];
+      const singularParamName = convertPluralNameToSingular(parameterName);
+      const currentContextParamValue = currentContext[singularParamName];
 
-    const singularParamName = convertPluralNameToSingular(parameterName);
-    const currentContextParamValue = currentContext[singularParamName];
-
-    if (parameterValue?.length && parameterValue?.includes(currentContextParamValue)) {
-      return true;
+      if (currentContextParamValue && parameterValue?.length && parameterValue.includes(currentContextParamValue)) {
+        return true;
+      }
     }
   }
+
   return false;
 }
 
