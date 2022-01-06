@@ -82,7 +82,8 @@
       "src/example/example_simple.ts",
       "src/request.ts",
       "src/utils.ts",
-      "src/client.ts"
+      "src/client.ts",
+      "src/strategies.ts"
     ],
     "reporter": [
       "text",
