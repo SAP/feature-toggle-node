@@ -44,7 +44,7 @@ To run the feature-toggle-node **locally**, you need to provide the following en
 - `TENANT_NAME` - (mandatory)
 - `LANDSCAPE_ENVIRONMENT` - (mandatory)
 - `LANDSCAPE_NAME` - (mandatory)
-- `FTM_HOST` - Feature toggle server endpoint (optional)
+- `FTM_HOST` - Feature toggle server host (optional)
 - `LANDSCAPE_INFRASTRUCTURE` - (optional)
 - `SHOW_LOG` - If true, displays console logs (optional)
 
