@@ -38,13 +38,14 @@ Install the feature-toggle-node as a dependency.
 
 ### Configuration
 To run the feature-toggle-node **locally**, you need to provide the following environment variables:
-- `FTM_HOST` - Feature toggle server endpoint (mandatory)
 - `USER_NAME` - Name of the user logged into SAP Business Application Studio (mandatory)
 - `WORKSPACE_ID` - ID of the workspace (mandatory)
 - `TENANT_ID` - (mandatory)
 - `TENANT_NAME` - (mandatory)
 - `LANDSCAPE_ENVIRONMENT` - (mandatory)
 - `LANDSCAPE_NAME` - (mandatory)
+- `FTM_HOST` - Feature toggle server endpoint (optional)
+- `LANDSCAPE_INFRASTRUCTURE` - (optional)
 - `SHOW_LOG` - If true, displays console logs (optional)
 
 Environment variables example:
