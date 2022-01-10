@@ -10,9 +10,9 @@
 A Node.js module for enabling or disabling Node.js-based SAP Business Application Studio features.
 
 ## Description
-This module is used to inquire if an SAP Business Application Studio feature toggle is enabled or disabled.
+This module used to inquire if an SAP Business Application Studio feature toggle enabled or disabled.
 
-This module should be used if your SAP Business Application Studio extension is written in Node.js or TypeScript and you want to control the extension features via feature toggle.
+This module should be used if your SAP Business Application Studio extension written in Node.js or TypeScript and you want to control the extension features via feature toggle.
 
 
 ## Requirements
@@ -38,20 +38,20 @@ Install the feature-toggle-node as a dependency.
 
 ### Configuration
 To run the feature-toggle-node **locally**, you need to provide the following environment variables:
-- `FT_SERVER_ENDPOINT` - Feature toggle server endpoint (mandatory)
 - `USER_NAME` - Name of the user logged into SAP Business Application Studio (mandatory)
 - `WORKSPACE_ID` - ID of the workspace (mandatory)
 - `TENANT_ID` - (mandatory)
 - `TENANT_NAME` - (mandatory)
 - `LANDSCAPE_ENVIRONMENT` - (mandatory)
 - `LANDSCAPE_NAME` - (mandatory)
-- `FT_TOKEN` - Value of the feature toggle server API token (optional)
+- `FTM_HOST` - Feature toggle server host (optional)
+- `LANDSCAPE_INFRASTRUCTURE` - (optional)
 - `SHOW_LOG` - If true, displays console logs (optional)
 
 Environment variables example:
 
 ```
-"FT_SERVER_ENDPOINT": "http://unleash.herokuapp.com",
+"FTM_HOST": "http://localhost:8080",
 "USER_NAME": "user@hotmail.com",
 "TENANT_ID" : "b5c05535-9495-4050-9d68-4356d0d34136",
 "TENANT_NAME": "cfsubaccount" // subaccount,

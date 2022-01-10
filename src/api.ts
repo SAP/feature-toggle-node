@@ -1,35 +1,24 @@
-import { Context } from "unleash-client/lib/context";
-import * as clientManager from "./unleash_client_manager";
-import * as contextManager from "./context_manager";
 import { log } from "./logger";
-import { Unleash } from "unleash-client";
+import { findToggleAndReturnState } from "./client";
 
-export async function isFeatureEnabled(extensionName: string, featureToggleName: string): Promise<boolean> {
-  log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${featureToggleName}" is enabled`);
+function validateFeatureToggleName(extensionName: string, toggleName: string): void {
+  if (!extensionName || !toggleName) {
+    const errStr = !extensionName ? "extension " : "";
+    throw new Error(`Feature toggle ${errStr}name can not be empty, null or undefined`);
+  }
+}
 
-  const ftName = `${extensionName}.${featureToggleName}`;
+export async function isFeatureEnabled(extensionName: string, toggleName: string): Promise<boolean> {
+  log(`Checking if Extension Name: "${extensionName}", Feature Toggle Name: "${toggleName}" is enabled`);
+
+  const ftName = `${extensionName}.${toggleName}`;
 
   try {
-    if (!extensionName) {
-      throw new Error("Feature toggle extension name can not be empty, null or undefined");
-    }
-
-    if (!featureToggleName) {
-      throw new Error("Feature toggle name can not be empty, null or undefined");
-    }
-
-    //get unleash client
-    const client: Unleash = await clientManager.getUnleashClient(extensionName);
-
-    // get the context
-    const context: Context = contextManager.getContext(extensionName);
-
-    //check if the feature is enabled
-    //fallback value is false (3rd parameter)
-    return client.isEnabled(ftName, context, false);
+    validateFeatureToggleName(extensionName, toggleName);
+    return await findToggleAndReturnState(ftName);
   } catch (err) {
     const logErr = `[ERROR] Failed to determine if feature toggle ${ftName} is enabled. Returning feature DISABLED. Error message: ${err}`;
     log(logErr);
-    return false; // error creating an Unleash client -> return feature is disabled
+    return false;
   }
 }
