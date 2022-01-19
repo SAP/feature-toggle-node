@@ -1,3 +1,19 @@
+<a name="2.0.0"></a>
+
+# 2.0.0 (2022-01-19)
+
+### Features
+
+- Cache interval chagned to 15 minutes
+- Environment variables support
+    - Removed FT_TOKEN
+    - Added LANDSCAPE_INFRASTRUCTURE and FTM_HOST
+
+### BREAKING CHANGES
+
+- New client doesn't support unleash feature toggle anymore
+- Support new response from server
+
 <a name="1.0.9"></a>
 
 # 1.0.9 (2021-07-28)
