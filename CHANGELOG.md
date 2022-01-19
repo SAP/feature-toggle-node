@@ -6,7 +6,7 @@
 
 - Cache interval chagned to 15 minutes
 - Environment variables support
-    - Removed FT_TOKEN
+    - Removed FT_TOKEN, FT_SERVER_ENDPOINT
     - Added LANDSCAPE_INFRASTRUCTURE and FTM_HOST
 
 ### BREAKING CHANGES
