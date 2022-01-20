@@ -77,6 +77,7 @@ export async function findToggleAndReturnState(ftName: string): Promise<boolean>
   }
 
   const toggles: Features = await getFeatureToggles();
+
   if (toggles?.features?.length) {
     const toggle: Toggle | undefined = findToggleByName(toggles, ftName);
 

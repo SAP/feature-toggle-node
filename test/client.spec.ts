@@ -5,12 +5,13 @@ import * as Cache from "../src/cache";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
-import * as Logger from "../src/logger";
 import { updateRefreshInterval } from "../src/client";
+import * as Logger from "../src/logger";
 
 describe("findToggleAndReturnState", () => {
   beforeEach(function () {
     this.clock = sinon.useFakeTimers();
+    Cache.flushCache();
   });
 
   afterEach(function () {
@@ -102,6 +103,27 @@ describe("findToggleAndReturnState", () => {
     sinon.stub(Cache, "getFeatureToggles").returns(features);
     const isEnabled = await Client.findToggleAndReturnState(ftName);
     expect(isEnabled).to.be.true;
+  });
+
+  it("gets empty object from requestFeatureToggles return false", async () => {
+    const ftName = "ext.ftName";
+
+    sinon.stub(Cache, "getToggleByKey").returns(false);
+    sinon.stub(Request, "requestFeatureToggles").resolves({} as Client.Features);
+
+    const isEnabled = await Client.findToggleAndReturnState(ftName);
+    expect(isEnabled).to.be.false;
+  });
+
+  it("gets null from requestFeatureToggles return false", async () => {
+    // flow should not happen
+    const ftName = "ext.ftName";
+    const features: Client.Features = (null as unknown) as Client.Features;
+
+    sinon.stub(Request, "requestFeatureToggles").resolves(features);
+    sinon.stub(Strategies, "isToggleEnabled").returns(false);
+    const isEnabled = await Client.findToggleAndReturnState(ftName);
+    expect(isEnabled).to.be.false;
   });
 });
 

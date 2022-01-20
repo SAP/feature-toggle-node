@@ -27,13 +27,13 @@ export function requestFeatureToggles(): Promise<Features> {
             resolve(JSON.parse(Buffer.concat(data).toString()));
           } catch (e) {
             log(e.message);
-            resolve([] as any);
+            resolve({} as Features);
           }
         });
       })
       .on("error", (e) => {
         log(e.message);
-        resolve([] as any);
+        resolve({} as Features);
       });
   });
 }
