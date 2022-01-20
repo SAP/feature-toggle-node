@@ -12,7 +12,7 @@ function getEndpoint(): string {
 }
 
 export function requestFeatureToggles(): Promise<Features> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     https
       .get(getEndpoint(), (res) => {
         log("Get Toggles from server with Status Code: " + res.statusCode);
@@ -23,11 +23,17 @@ export function requestFeatureToggles(): Promise<Features> {
         });
 
         res.on("end", () => {
-          resolve(JSON.parse(Buffer.concat(data).toString()));
+          try {
+            resolve(JSON.parse(Buffer.concat(data).toString()));
+          } catch (e) {
+            log(e.message);
+            resolve([] as any);
+          }
         });
       })
       .on("error", (e) => {
-        reject(e);
+        log(e.message);
+        resolve([] as any);
       });
   });
 }
