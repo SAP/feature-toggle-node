@@ -6,7 +6,6 @@ import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
 import { updateRefreshInterval } from "../src/client";
-import * as Logger from "../src/logger";
 
 describe("findToggleAndReturnState", () => {
   beforeEach(function () {
@@ -205,19 +204,5 @@ describe("requestTogglesAndSaveNewCache", () => {
 
     expect(flushSpy.callCount).to.be.equal(0);
     expect(setSpy.callCount).to.be.equal(0);
-  });
-
-  it("reject error caught and logged", async () => {
-    sinon.stub(Request, "requestFeatureToggles").rejects(new Error("error"));
-    const flushSpy = sinon.stub(Cache, "flushCache");
-    const setSpy = sinon.stub(Cache, "setFeatureToggles");
-    const loggerSpy = sinon.stub(Logger, "log");
-
-    await Client.requestTogglesAndSaveNewCache();
-
-    expect(flushSpy.callCount).to.be.equal(0);
-    expect(setSpy.callCount).to.be.equal(0);
-    expect(loggerSpy.callCount).to.equal(1);
-    expect(loggerSpy.args[0][0]).to.equal("error");
   });
 });
