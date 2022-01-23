@@ -1,3 +1,13 @@
+# 2.0.1 (2022-01-23)
+
+### Features
+
+- Added handler on request timeout and invalid json
+
+### BREAKING CHANGES
+
+- None
+
 <a name="2.0.0"></a>
 
 # 2.0.0 (2022-01-19)
