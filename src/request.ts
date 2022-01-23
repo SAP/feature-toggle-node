@@ -11,8 +11,8 @@ function getEndpoint(): string {
   return host + API_ENDPOINT;
 }
 
-export function requestFeatureToggles(): Promise<Features> {
-  return new Promise((resolve) => {
+function makeRequest(): Promise<Uint8Array[]> {
+  return new Promise((resolve, reject) => {
     https
       .get(getEndpoint(), (res) => {
         log("Get Toggles from server with Status Code: " + res.statusCode);
@@ -23,17 +23,25 @@ export function requestFeatureToggles(): Promise<Features> {
         });
 
         res.on("end", () => {
-          try {
-            resolve(JSON.parse(Buffer.concat(data).toString()));
-          } catch (e) {
-            log(e.message);
-            resolve({} as Features);
-          }
+          resolve(data);
         });
       })
       .on("error", (e) => {
         log(e.message);
-        resolve({} as Features);
+        reject(e);
       });
   });
+}
+
+/*
+ * requestFeatureToggles always returns value
+ * */
+export async function requestFeatureToggles(): Promise<Features> {
+  try {
+    const data = await makeRequest();
+    return JSON.parse(Buffer.concat(data).toString());
+  } catch (e) {
+    log(e.message);
+    return {} as Features;
+  }
 }
