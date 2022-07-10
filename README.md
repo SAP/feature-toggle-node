@@ -81,4 +81,3 @@ Open an issue within this GitHub repository.
 
 Please see our [LICENSE](https://github.com/SAP/feature-toggle-node/LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available via the [REUSE tool](https://api.reuse.software/info/github.com/SAP/feature-toggle-node).
 
-
