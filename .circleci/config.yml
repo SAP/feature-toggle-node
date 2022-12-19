@@ -14,7 +14,7 @@ jobs:
 
   current_node:
     docker:
-      - image: circleci/node:16 # Current BAS node version
+      - image: circleci/node:1613.1 # Current BAS node version
     working_directory: ~/repo    
     steps:
       - checkout      
