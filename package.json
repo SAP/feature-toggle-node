@@ -9,7 +9,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=10.19"
+    "node": ">=14.21.2"
   },
   "scripts": {
     "ci": "npm-run-all compile lint coverage",
