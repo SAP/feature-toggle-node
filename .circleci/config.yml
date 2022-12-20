@@ -38,14 +38,14 @@ jobs:
 
   future_node:
     docker:
-      - image: circleci/node:17 # Future BAS node version
+      - image: circleci/node:18 # Future BAS node version
     working_directory: ~/repo    
     steps:
       - checkout      
       - run: npm install            
       - run: npm run ci      
       - run: ls -la
-      - run: echo node 17 job finished successfully
+      - run: echo node 18 job finished successfully
 
   compliance:
     docker:
