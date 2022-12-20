@@ -36,7 +36,6 @@ jobs:
       - run: ls -la
       - run: echo node 16 job finished successfully
 
-
   compliance:
     docker:
       - image: cimg/python:3.10.0
