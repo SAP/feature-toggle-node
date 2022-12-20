@@ -1,16 +1,16 @@
 version: 2
 
 jobs:
-  future_node:
+  previous_node:
     docker:
-      - image: circleci/node:17 # Future BAS node version
+      - image: circleci/node:14 # Future BAS node version
     working_directory: ~/repo    
     steps:
       - checkout      
       - run: npm install            
       - run: npm run ci      
       - run: ls -la
-      - run: echo node 17 job finished successfully
+      - run: echo node 14 job finished successfully
 
   current_node:
     docker:
@@ -35,6 +35,17 @@ jobs:
             COVERALLS_GIT_BRANCH: ${CIRCLE_BRANCH}
       - run: ls -la
       - run: echo node 16 job finished successfully
+
+  future_node:
+    docker:
+      - image: circleci/node:17 # Future BAS node version
+    working_directory: ~/repo    
+    steps:
+      - checkout      
+      - run: npm install            
+      - run: npm run ci      
+      - run: ls -la
+      - run: echo node 17 job finished successfully
 
   compliance:
     docker:
