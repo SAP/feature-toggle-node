@@ -1,3 +1,14 @@
+# 2.0.2 (2023-01-09)
+
+### Features
+
+- Updated dependencies 
+- Sanitize user input for log
+
+### BREAKING CHANGES
+
+- None
+
 # 2.0.1 (2022-01-23)
 
 ### Features
