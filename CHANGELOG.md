@@ -3,6 +3,7 @@
 ### Features
 
 - Updated dependencies 
+- Sanitize user input for log
 
 ### BREAKING CHANGES
 
