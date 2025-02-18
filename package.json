@@ -29,9 +29,7 @@
   "author": "SAP SE",
   "license": "Apache-2.0",
   "dependencies": {
-    "await-to-js": "3.0.0",
-    "node-cache": "5.1.2",
-    "parse-duration": "0.4.4"
+    "node-cache": "5.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
