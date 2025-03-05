@@ -43,7 +43,7 @@ export async function requestTogglesAndSaveNewCache(): Promise<void> {
 }
 
 export async function refreshCacheByInterval(): Promise<void> {
-   return await requestTogglesAndSaveNewCache();
+   await requestTogglesAndSaveNewCache();
 }
 
 async function getFeatureToggles(): Promise<Features> {
