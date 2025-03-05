@@ -26,25 +26,26 @@ export interface Toggle extends Parameters {
 
 let REFRESH_INTERVAL = 60 * 1000 * 15; // 15 minutes
 let timeIntervalId: NodeJS.Timeout;
+let isCched: boolean;
 
 // tests purpose
 export function updateRefreshInterval(interval: number): void {
   REFRESH_INTERVAL = interval;
 }
 
-export async function requestTogglesAndSaveNewCache(): Promise<void> {
+export async function requestTogglesAndSaveNewCache(): Promise<boolean> {
   const toggles = await requestFeatureToggles();
   if (toggles?.features?.length) {
     Cache.flushCache();
     Cache.setFeatureToggles(toggles);
     log("Feature toggle cache updated");
+    return true
   }
+  return false
 }
 
-export function refreshCacheByInterval(): void {
-  timeIntervalId = setInterval(async () => {
-    await requestTogglesAndSaveNewCache();
-  }, REFRESH_INTERVAL);
+export async function refreshCacheByInterval(): Promise<boolean> {
+   return await requestTogglesAndSaveNewCache();
 }
 
 async function getFeatureToggles(): Promise<Features> {
@@ -70,8 +71,8 @@ function findToggleByName(toggles: Features, ftName: string): Toggle | undefined
  * makes request to server, update cache and calculate toggle value
  * */
 export async function findToggleAndReturnState(ftName: string): Promise<boolean> {
-  if (!timeIntervalId) {
-    refreshCacheByInterval();
+  if (!isCched) {
+    isCched = await refreshCacheByInterval();
   }
 
   const toggleFromCache = Cache.getToggleByKey(ftName);
