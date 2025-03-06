@@ -5,7 +5,6 @@ import * as Cache from "../src/cache";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
-import { updateRefreshInterval } from "../src/client";
 
 describe("findToggleAndReturnState", () => {
   beforeEach(function () {
@@ -133,18 +132,6 @@ describe("refreshCacheByInterval", () => {
 
   afterEach(function () {
     this.clock = sinon.restore();
-  });
-
-  it("checked that requestFeatureToggles called twice in last 20 seconds", function () {
-    updateRefreshInterval(10);
-    Client.refreshCacheByInterval();
-
-    const features: Client.Features = {
-      features: [],
-    };
-    const spy = sinon.stub(Request, "requestFeatureToggles").resolves(features);
-    this.clock.tick(20);
-    expect(spy.callCount).to.be.equal(2);
   });
 });
 
