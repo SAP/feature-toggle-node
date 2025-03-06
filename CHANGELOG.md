@@ -1,14 +1,3 @@
-# 2.0.2 (2025-02-06)
-
-### Features
-
-- Updated dependencies
-- Fix cache issue
-
-### BREAKING CHANGES
-
-- None
-- 
 # 2.0.2 (2023-01-09)
 
 ### Features
