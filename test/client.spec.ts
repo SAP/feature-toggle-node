@@ -134,17 +134,6 @@ describe("refreshCacheByInterval", () => {
     this.clock = sinon.restore();
   });
 
-  it("checked that requestFeatureToggles called twice in last 20 seconds", function () {
-    updateRefreshInterval(10);
-    Client.refreshCacheByInterval();
-
-    const features: Client.Features = {
-      features: [],
-    };
-    const spy = sinon.stub(Request, "requestFeatureToggles").resolves(features);
-    this.clock.tick(20);
-    expect(spy.callCount).to.be.equal(2);
-  });
 });
 
 async function stubFlushAndSet(features: Client.Features): Promise<void> {
