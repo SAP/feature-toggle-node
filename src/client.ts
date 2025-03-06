@@ -25,6 +25,7 @@ export interface Toggle extends Parameters {
 }
 
 let timeIntervalId: NodeJS.Timeout;
+let REFRESH_INTERVAL = 60 * 1000 * 15; // 15 minutes
 let isCched: boolean;
 
 // tests purpose
