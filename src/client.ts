@@ -28,11 +28,6 @@ let timeIntervalId: NodeJS.Timeout;
 let REFRESH_INTERVAL = 60 * 1000 * 15; // 15 minutes
 let isCched: boolean;
 
-// tests purpose
-export function updateRefreshInterval(interval: number): void {
-  REFRESH_INTERVAL = interval;
-}
-
 export async function requestTogglesAndSaveNewCache(): Promise<void> {
   const toggles = await requestFeatureToggles();
   if (toggles?.features?.length) {

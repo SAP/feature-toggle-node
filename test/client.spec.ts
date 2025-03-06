@@ -5,7 +5,6 @@ import * as Cache from "../src/cache";
 import * as Request from "../src/request";
 import * as Strategies from "../src/strategies";
 import * as Client from "../src/client";
-import { updateRefreshInterval } from "../src/client";
 
 describe("findToggleAndReturnState", () => {
   beforeEach(function () {
