@@ -36,12 +36,16 @@ function makeRequest(): Promise<Uint8Array[]> {
 /*
  * requestFeatureToggles always returns value
  * */
-export async function requestFeatureToggles(): Promise<Features> {
+export async function requestFeatureToggles(): Promise<Features | undefined> {
   try {
     const data = await makeRequest();
     return JSON.parse(Buffer.concat(data).toString());
-  } catch (e) {
-    log(e.message);
-    return {} as Features;
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      log(e.message); // This will work
+    } else {
+      log('An unknown error occurred');
+    }
+    return undefined;
   }
 }
