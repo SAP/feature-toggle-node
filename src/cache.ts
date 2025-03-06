@@ -14,7 +14,7 @@ export function getFeatureToggles(): Features | undefined {
   return ftCache.get(FEATURES_KEY);
 }
 
-export function setFeatureToggles(toggles: Features): void {
+export function setFeatureToggles(toggles: Features | undefined): void {
   ftCache.set(FEATURES_KEY, toggles);
 }
 

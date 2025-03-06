@@ -39,7 +39,7 @@ export async function refreshCacheByInterval(): Promise<void> {
   await requestTogglesAndSaveNewCache();
 }
 
-async function getFeatureToggles(): Promise<Features> {
+async function getFeatureToggles(): Promise<Features | undefined> {
   let toggles: Features | undefined = Cache.getFeatureToggles();
 
   if (!toggles) {
@@ -73,7 +73,7 @@ export async function findToggleAndReturnState(ftName: string): Promise<boolean>
     return toggleFromCache;
   }
 
-  const toggles: Features = await getFeatureToggles();
+  const toggles: Features | undefined = await getFeatureToggles();
 
   if (toggles?.features?.length) {
     const toggle: Toggle | undefined = findToggleByName(toggles, ftName);
