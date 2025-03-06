@@ -133,7 +133,6 @@ describe("refreshCacheByInterval", () => {
   afterEach(function () {
     this.clock = sinon.restore();
   });
-
 });
 
 async function stubFlushAndSet(features: Client.Features): Promise<void> {
