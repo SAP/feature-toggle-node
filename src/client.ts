@@ -24,8 +24,6 @@ export interface Toggle extends Parameters {
   strategies: boolean;
 }
 
-let timeIntervalId: NodeJS.Timeout;
-let REFRESH_INTERVAL = 60 * 1000 * 15; // 15 minutes
 let isCched: boolean;
 
 export async function requestTogglesAndSaveNewCache(): Promise<void> {
