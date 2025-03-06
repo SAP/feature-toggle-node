@@ -73,7 +73,7 @@ export async function findToggleAndReturnState(ftName: string): Promise<boolean>
     return toggleFromCache;
   }
 
-  const toggles: Features | undefined= await getFeatureToggles();
+  const toggles: Features | undefined = await getFeatureToggles();
 
   if (toggles?.features?.length) {
     const toggle: Toggle | undefined = findToggleByName(toggles, ftName);

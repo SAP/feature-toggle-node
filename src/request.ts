@@ -44,7 +44,7 @@ export async function requestFeatureToggles(): Promise<Features | undefined> {
     if (e instanceof Error) {
       log(e.message); // This will work
     } else {
-      log('An unknown error occurred');
+      log("An unknown error occurred");
     }
     return undefined;
   }
