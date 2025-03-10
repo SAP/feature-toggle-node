@@ -1,3 +1,10 @@
+# 2.0.3 (2025-02-10)
+
+### Features
+
+- Updated dependencies
+- Updated cache 
+
 # 2.0.2 (2023-01-09)
 
 ### Features
