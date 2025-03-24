@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "feature-toggle-node"
+SPDX-PackageSupplier = "Lior Frenkel <lior.frenkel@sap.com>"
+SPDX-PackageDownloadLocation = "https://github.com/SAP/feature-toggle-node"
+
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2020-2025 SAP SE or an SAP affiliate company and feature-toggle-node contributors"
+SPDX-License-Identifier = "Apache-2.0"
