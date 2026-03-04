@@ -1,3 +1,13 @@
+# 2.1.0 (2026-03-04)
+
+### Features
+
+- Fewer mandatory environment variables. to support "vending machine" flows.
+
+### BREAKING CHANGES
+
+- None
+
 # 2.0.2 (2023-01-09)
 
 ### Features
