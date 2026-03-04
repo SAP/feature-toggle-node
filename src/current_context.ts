@@ -24,15 +24,15 @@ function getEnvWithNotFoundError(envVar: string): string {
 
 export function createContextEntity(): ContextData {
   // get the user name from the env
-  const user = getEnvWithNotFoundError(USER_NAME);
+  const user = getEnv(USER_NAME);
   // get the environment from the env
   const environment = getEnvWithNotFoundError(LANDSCAPE_ENVIRONMENT);
   // get the landscape from the env
   const landscape = getEnvWithNotFoundError(LANDSCAPE_NAME);
   // get the tenant id from the env
-  const tenantid = getEnvWithNotFoundError(TENANT_ID);
+  const tenantid = getEnv(TENANT_ID);
   // get the tenant id from the env
-  const subaccount = getEnvWithNotFoundError(SUB_ACCOUNT);
+  const subaccount = getEnv(SUB_ACCOUNT);
   // get WORKSPACE_ID env
   const ws = getEnvWithNotFoundError(WORKSPACE_ID);
   // get LANDSCAPE_INFRASTRUCTURE env or empty string if not found
