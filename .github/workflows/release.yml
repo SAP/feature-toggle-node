@@ -6,10 +6,12 @@ on:
 
 permissions:
   id-token: write
+  contents: read
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: npm-publish
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -18,10 +20,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run ci
 
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --provenance
